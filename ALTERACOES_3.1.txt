@@ -1,0 +1,10 @@
+J.C IMPORTS — ALTERAÇÕES 3.1
+
+1. Logo do papel timbrado corrigida para funcionar também na impressão/PDF.
+2. Cadastro de produto reorganizado com melhor alinhamento, margens laterais e campos padronizados.
+3. Cadastro de novo cliente reorganizado conforme o rascunho enviado.
+4. Últimas vendas no dashboard agora possuem painel de atividade recolhível/expansível.
+   - O painel branco permanece demarcado.
+   - Botão no canto superior direito recolhe e expande o conteúdo.
+   - Lista interna possui limite de altura e rolagem quando houver muitas vendas.
+   - A função não altera os dados das vendas.

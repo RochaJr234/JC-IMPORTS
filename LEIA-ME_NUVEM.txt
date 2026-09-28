@@ -1,0 +1,15 @@
+J.C IMPORTS 3.2 — NUVEM MULTIDISPOSITIVO
+
+Esta versão foi organizada com index.html na raiz para evitar abrir uma versão antiga por engano.
+
+1. Abra ESTA pasta no VS Code.
+2. Clique com o botão direito no index.html.
+3. Open with Live Server.
+4. O endereço deve terminar em /index.html.
+5. Pressione Ctrl+Shift+R.
+6. Clique em Configurações.
+
+O cartão de sincronização está inserido diretamente no HTML; ele não depende da renderização do módulo para aparecer.
+
+
+VERSAO FINAL DEFINITIVO: navegação da tela Configurações independente do app.js.
