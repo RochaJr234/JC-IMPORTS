@@ -1,0 +1,10 @@
+J.C IMPORTS 3.2 — NOVA INTERFACE A RECEBER
+
+- Substituída a tabela apertada por cartões agrupados por cliente/venda.
+- Busca por cliente, venda, ID e parcela.
+- Filtros: em aberto, vencidos e recebidos.
+- Parcelas organizadas dentro da venda.
+- Ações de Receber e Quitar tudo preservadas.
+- Interface responsiva para celular e computador.
+- Lógica de contas, recebimentos, financeiro e Supabase preservada.
+- Esta versão foi criada a partir da cópia da J.C Imports 3.1 FINAL COMPLETO.

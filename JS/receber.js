@@ -1,5 +1,5 @@
 /* =========================================================
-   J.C IMPORTS 2.0
+   J.C IMPORTS 3.2
    MÓDULO CONTAS A RECEBER
    ========================================================= */
 
@@ -854,22 +854,8 @@
                 <div class="receber-resumo">
 
                     <div class="receber-card">
-                        <span>Total a receber</span>
+                        <span>Total em aberto</span>
                         <strong id="receberTotal">
-                            R$ 0,00
-                        </strong>
-                    </div>
-
-                    <div class="receber-card">
-                        <span>Em aberto</span>
-                        <strong id="receberAberto">
-                            R$ 0,00
-                        </strong>
-                    </div>
-
-                    <div class="receber-card">
-                        <span>Recebido</span>
-                        <strong id="receberRecebido">
                             R$ 0,00
                         </strong>
                     </div>
@@ -881,6 +867,20 @@
                         </strong>
                     </div>
 
+                    <div class="receber-card">
+                        <span>Vence hoje</span>
+                        <strong id="receberHoje">
+                            R$ 0,00
+                        </strong>
+                    </div>
+
+                    <div class="receber-card">
+                        <span>Recebido este mês</span>
+                        <strong id="receberMes">
+                            R$ 0,00
+                        </strong>
+                    </div>
+
                 </div>
 
 
@@ -888,99 +888,35 @@
 
                     <div class="receber-topo">
 
-                        <div>
-                            <h2>
-                                Contas a receber
-                            </h2>
-
-                            <p>
-                                Acompanhe as vendas realizadas a prazo.
-                            </p>
+                        <div class="receber-titulo-bloco">
+                            <div class="receber-titulo-icone">$</div>
+                            <div>
+                                <h2>Contas a receber</h2>
+                                <p>Visualize clientes, parcelas e recebimentos de forma simples.</p>
+                            </div>
                         </div>
 
-
                         <div class="receber-filtros">
-
+                            <div class="receber-busca-wrap">
+                                <span>⌕</span>
+                                <input id="buscaReceber" type="search" placeholder="Buscar cliente ou venda..." autocomplete="off">
+                            </div>
                             <select id="filtroReceber">
-
-                                <option value="aberto" selected>
-                                    Em aberto
-                                </option>
-
-                                <option value="vencido">
-                                    Vencidos
-                                </option>
-
+                                <option value="aberto" selected>Em aberto</option>
+                                <option value="vencido">Vencidos</option>
+                                <option value="recebido">Recebidos</option>
                             </select>
-
-                            <button
-                                type="button"
-                                id="btnPastaRecebidos"
-                                class="btn-pasta-recebidos"
-                                title="Abrir valores já recebidos"
-                            >
-                                📁 Recebidos
-                            </button>
-
+                            <button type="button" id="btnPastaRecebidos" class="btn-pasta-recebidos" title="Abrir valores já recebidos">📁 Recebidos</button>
                         </div>
 
                     </div>
 
-
-                    <div class="receber-tabela-wrapper">
-
-                        <table class="receber-tabela">
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>
-                                        Cliente
-                                    </th>
-
-                                    <th>
-                                        Venda
-                                    </th>
-
-                                    <th>
-                                        Vencimento
-                                    </th>
-
-                                    <th>
-                                        Valor
-                                    </th>
-
-                                    <th>
-                                        Status
-                                    </th>
-
-                                    <th>
-                                        Ação
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody id="listaReceber">
-
-                                <tr>
-
-                                    <td
-                                        colspan="6"
-                                        class="receber-vazio"
-                                    >
-                                        Nenhuma conta a receber.
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
+                    <div id="listaReceber" class="receber-lista-cards">
+                        <div class="receber-vazio-card">
+                            <div class="receber-vazio-icone">✓</div>
+                            <strong>Nenhuma conta a receber</strong>
+                            <span>As vendas a prazo aparecerão aqui.</span>
+                        </div>
                     </div>
 
                 </div>
@@ -999,55 +935,41 @@
 
     function atualizarResumoReceber() {
 
-        const total =
-            document.getElementById("receberTotal");
+        const total = document.getElementById("receberTotal");
+        const vencido = document.getElementById("receberVencido");
+        const hoje = document.getElementById("receberHoje");
+        const mes = document.getElementById("receberMes");
 
-        const aberto =
-            document.getElementById("receberAberto");
+        const hojeTexto = new Date().toISOString().slice(0, 10);
+        const totalHoje = JCReceber.pendentes()
+            .filter(function (conta) {
+                return String(conta.vencimento || "").slice(0, 10) === hojeTexto;
+            })
+            .reduce(function (soma, conta) {
+                return soma + (Number(conta.saldo) || 0);
+            }, 0);
 
-        const recebido =
-            document.getElementById("receberRecebido");
-
-        const vencido =
-            document.getElementById("receberVencido");
-
-
-        if (total) {
-
-            total.textContent =
-                moedaReceber(
-                    JCReceber.totalGeral()
-                );
+        let recebidoMes = 0;
+        if (JCStorage && typeof JCStorage.obterMovimentacoes === "function") {
+            const agora = new Date();
+            recebidoMes = JCStorage.obterMovimentacoes()
+                .filter(function (mov) {
+                    if (mov.tipo !== "entrada" || mov.categoria !== "recebimento") return false;
+                    const data = new Date(mov.data || mov.criadoEm || "");
+                    return !Number.isNaN(data.getTime()) &&
+                        data.getFullYear() === agora.getFullYear() &&
+                        data.getMonth() === agora.getMonth();
+                })
+                .reduce(function (soma, mov) {
+                    return soma + (Number(mov.valor) || 0);
+                }, 0);
         }
 
-
-        if (aberto) {
-
-            aberto.textContent =
-                moedaReceber(
-                    JCReceber.totalPendente()
-                );
-        }
-
-
-        if (recebido) {
-
-            recebido.textContent =
-                moedaReceber(
-                    JCReceber.totalRecebido()
-                );
-        }
-
-
-        if (vencido) {
-
-            vencido.textContent =
-                moedaReceber(
-                    JCReceber.totalVencido()
-                );
-        }
+        if (total) total.textContent = moedaReceber(JCReceber.totalPendente());
+        if (vencido) vencido.textContent = moedaReceber(JCReceber.totalVencido());
+        if (hoje) hoje.textContent = moedaReceber(totalHoje);
+        if (mes) mes.textContent = moedaReceber(recebidoMes);
     }
-
 
     /* =====================================================
        STATUS DA CONTA
@@ -1101,329 +1023,155 @@
 
     function atualizarListaReceber() {
 
-        const lista =
-            document.getElementById("listaReceber");
+        const lista = document.getElementById("listaReceber");
+        if (!lista) return;
 
+        const filtro = document.getElementById("filtroReceber");
+        const busca = document.getElementById("buscaReceber");
+        let tipoFiltro = filtro ? filtro.value : "aberto";
+        const termo = busca ? String(busca.value || "").trim().toLowerCase() : "";
 
-        if (!lista) {
-            return;
-        }
+        if (modoListaReceber === "recebidos") tipoFiltro = "recebido";
 
+        let contas = JCReceber.listar().filter(function (conta) {
+            return conta.status !== "cancelado" && conta.status !== "cancelada";
+        });
 
-        const filtro =
-            document.getElementById("filtroReceber");
-
-
-        let tipoFiltro =
-            filtro
-                ? filtro.value
-                : "aberto";
-
-        if (modoListaReceber === "recebidos") {
-            tipoFiltro = "recebido";
-        }
-
-
-        let contas =
-            JCReceber.listar()
-                .filter(function (conta) {
-
-                    return (
-                        conta.status !== "cancelado" &&
-                        conta.status !== "cancelada"
-                    );
-
-                });
-
-
-        /* -----------------------------------------------
-           FILTROS
-           ----------------------------------------------- */
-
-        /* PASTA RECEBIDOS */
         if (tipoFiltro === "recebido") {
-
             contas = contas.filter(function (conta) {
-                return (
-                    conta.status === "pago" ||
-                    Number(conta.saldo) <= 0
-                );
+                return conta.status === "pago" || Number(conta.saldo) <= 0;
+            });
+        } else if (tipoFiltro === "aberto") {
+            contas = contas.filter(function (conta) {
+                return Number(conta.saldo) > 0 && !contaVencida(conta);
+            });
+        } else if (tipoFiltro === "vencido") {
+            contas = contas.filter(function (conta) {
+                return Number(conta.saldo) > 0 && contaVencida(conta);
             });
         }
 
-
-        if (tipoFiltro === "aberto") {
-
-            contas =
-                contas.filter(function (conta) {
-
-                    return (
-                        conta.status === "pendente" &&
-                        Number(conta.saldo) > 0 &&
-                        !contaVencida(conta)
-                    );
-
-                });
+        if (termo) {
+            contas = contas.filter(function (conta) {
+                const texto = [
+                    conta.clienteNome,
+                    conta.descricao,
+                    conta.vendaId,
+                    conta.id,
+                    conta.parcela
+                ].join(" ").toLowerCase();
+                return texto.indexOf(termo) !== -1;
+            });
         }
-
-
-        if (tipoFiltro === "vencido") {
-
-            contas =
-                contas.filter(function (conta) {
-
-                    return contaVencida(conta);
-
-                });
-        }
-
-
-        if (tipoFiltro === "recebido") {
-
-            contas =
-                contas.filter(function (conta) {
-
-                    return (
-                        conta.status === "pago" ||
-                        Number(conta.saldo) <= 0
-                    );
-
-                });
-        }
-
-
-        /* -----------------------------------------------
-           ORDENAÇÃO
-           ----------------------------------------------- */
 
         contas.sort(function (a, b) {
-
-            const dataA =
-                String(a.vencimento || "9999-12-31");
-
-            const dataB =
-                String(b.vencimento || "9999-12-31");
-
-
+            const dataA = String(a.vencimento || "9999-12-31");
+            const dataB = String(b.vencimento || "9999-12-31");
             return dataA.localeCompare(dataB);
-
         });
 
-
-        /* -----------------------------------------------
-           NENHUMA CONTA
-           ----------------------------------------------- */
-
         if (!contas.length) {
-
             lista.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="6"
-                        class="receber-vazio"
-                    >
-                        Nenhuma conta encontrada.
-                    </td>
-
-                </tr>
-
-            `;
-
+                <div class="receber-vazio-card">
+                    <div class="receber-vazio-icone">✓</div>
+                    <strong>Nenhuma conta encontrada</strong>
+                    <span>Altere o filtro ou a busca para visualizar outras contas.</span>
+                </div>`;
             return;
         }
 
+        const grupos = {};
+        contas.forEach(function (conta) {
+            const chave = conta.vendaId ? String(conta.vendaId) : "conta-" + String(conta.id);
+            if (!grupos[chave]) grupos[chave] = [];
+            grupos[chave].push(conta);
+        });
 
-        /* -----------------------------------------------
-           MONTAR LINHAS
-           ----------------------------------------------- */
+        lista.innerHTML = Object.keys(grupos).map(function (chave) {
+            const parcelas = grupos[chave].slice().sort(function (a, b) {
+                return Number(a.parcela || 1) - Number(b.parcela || 1);
+            });
+            const primeira = parcelas[0];
+            const todasDaVenda = primeira.vendaId
+                ? JCReceber.listar().filter(function (item) {
+                    return String(item.vendaId || "") === String(primeira.vendaId || "") &&
+                        item.status !== "cancelado" && item.status !== "cancelada";
+                }).sort(function (a, b) {
+                    return Number(a.parcela || 1) - Number(b.parcela || 1);
+                })
+                : parcelas;
 
-        lista.innerHTML =
-            contas.map(function (conta) {
+            const cliente = primeira.clienteNome || "Cliente não informado";
+            const venda = primeira.descricao || primeira.vendaId || "Venda";
+            const totalVenda = todasDaVenda.reduce(function (soma, item) {
+                return soma + (Number(item.valor) || 0);
+            }, 0);
+            const saldoVenda = todasDaVenda.reduce(function (soma, item) {
+                return soma + Math.max(Number(item.saldo) || 0, 0);
+            }, 0);
+            const recebidoVenda = Math.max(totalVenda - saldoVenda, 0);
+            const abertas = todasDaVenda.filter(function (item) { return Number(item.saldo) > 0; });
+            const primeiraAberta = abertas[0] || null;
+            const podeQuitarTudo = !!(primeira.vendaId && primeiraAberta && String(primeiraAberta.id) === String(primeira.id));
 
-                const status =
-                    obterStatusConta(conta);
-
-
-                const cliente =
-                    conta.clienteNome ||
-                    "Cliente não informado";
-
-
-                const venda =
-                    conta.descricao ||
-                    conta.vendaId ||
-                    "Venda";
-
-
-                const vencimento =
-                    formatarDataReceber(
-                        conta.vencimento
-                    );
-
-
-                const valor =
-                    Number(conta.valor) || 0;
-
-
-                const saldo =
-                    Number(conta.saldo) || 0;
-
-
-                let acao = "";
-
-                const contasDaVenda = conta.vendaId
-                    ? JCReceber.listar().filter(function (item) {
-                        return String(item.vendaId || "") === String(conta.vendaId || "") &&
-                            item.status !== "cancelado" &&
-                            item.status !== "cancelada";
-                    })
-                    : [];
-
-                const menorParcela = contasDaVenda.length
-                    ? Math.min.apply(null, contasDaVenda.map(function (item) {
-                        return Number(item.parcela || 1);
-                    }))
-                    : null;
-
-                const primeiraContaDaVenda = conta.vendaId
-                    ? contasDaVenda
-                        .filter(function (item) {
-                            return Number(item.saldo) > 0;
-                        })
-                        .sort(function (a, b) {
-                            return Number(a.parcela || 1) - Number(b.parcela || 1);
-                        })[0] || null
-                    : null;
-
-                const mostrarQuitarTotal = !!(
-                    conta.vendaId &&
-                    primeiraContaDaVenda &&
-                    String(primeiraContaDaVenda.id) === String(conta.id) &&
-                    contasDaVenda.some(function (item) {
-                        return Number(item.saldo) > 0;
-                    })
-                );
-
-
-                if (
-                    conta.status === "pendente" &&
-                    saldo > 0
-                ) {
-
-                    acao = `
-
-                        <div
-                            class="receber-acoes"
-                            style="
-                                display:flex;
-                                gap:6px;
-                                flex-wrap:wrap;
-                            "
-                        >
-
-                            <button
-                                type="button"
-                                class="btn-receber"
-                                data-receber-conta="${escaparReceber(conta.id)}"
-                            >
-                                Receber
-                            </button>
-
-                            <button
-                                type="button"
-                                class="btn-quitar"
-                                data-quitar-conta="${escaparReceber(conta.id)}"
-                            >
-                                Quitar parcela
-                            </button>
-
-                            ${mostrarQuitarTotal ? `
-                                <button
-                                    type="button"
-                                    class="btn-quitar-total"
-                                    data-quitar-venda="${escaparReceber(conta.vendaId)}"
-                                >
-                                    Quitar total
-                                </button>
-                            ` : ""}
-
-                        </div>
-
-                    `;
-
-                } else {
-
-                    acao = `
-                        <span
-                            style="
-                                opacity:.6;
-                            "
-                        >
-                            —
-                        </span>
-                    `;
-                }
-
+            const parcelasHtml = todasDaVenda.map(function (conta) {
+                const status = obterStatusConta(conta);
+                const saldo = Number(conta.saldo) || 0;
+                const valor = Number(conta.valor) || 0;
+                const parcelaNumero = Number(conta.parcela || 1);
+                const vencimento = formatarDataReceber(conta.vencimento);
+                const acao = saldo > 0 && conta.status !== "pago"
+                    ? `<button type="button" class="btn-receber btn-receber-mini" data-receber-conta="${escaparReceber(conta.id)}">Receber</button>`
+                    : `<span class="receber-pago-mini">✓ Recebido</span>`;
 
                 return `
-
-                    <tr>
-
-                        <td>
-                            ${escaparReceber(cliente)}
-                        </td>
-
-                        <td>
-                            ${escaparReceber(venda)}
-                        </td>
-
-                        <td>
-                            ${vencimento}
-                        </td>
-
-                        <td>
-
-                            <strong>
-                                ${moedaReceber(valor)}
-                            </strong>
-
-                            ${
-                                saldo < valor
-                                    ? `
-                                        <br>
-                                        <small>
-                                            Saldo:
-                                            ${moedaReceber(saldo)}
-                                        </small>
-                                      `
-                                    : ""
-                            }
-
-                        </td>
-
-                        <td>
-
-                            <span
-                                class="receber-status receber-status-${status.classe}"
-                            >
-                                ${status.texto}
-                            </span>
-
-                        </td>
-
-                        <td>
-                            ${acao}
-                        </td>
-
-                    </tr>
-
-                `;
-
+                    <div class="receber-parcela-row">
+                        <div class="receber-parcela-identidade">
+                            <strong>${parcelaNumero}ª parcela</strong>
+                            <span>Vencimento ${vencimento}</span>
+                        </div>
+                        <div class="receber-parcela-valor">
+                            <strong>${moedaReceber(valor)}</strong>
+                            ${saldo < valor && saldo > 0 ? `<span>Saldo ${moedaReceber(saldo)}</span>` : ""}
+                        </div>
+                        <span class="receber-status receber-status-${status.classe}">${status.texto}</span>
+                        <div class="receber-parcela-acao">${acao}</div>
+                    </div>`;
             }).join("");
-    }
 
+            return `
+                <article class="receber-venda-card">
+                    <div class="receber-venda-cabecalho">
+                        <div class="receber-cliente-bloco">
+                            <div class="receber-avatar">${escaparReceber(cliente.charAt(0).toUpperCase())}</div>
+                            <div>
+                                <strong>${escaparReceber(cliente)}</strong>
+                                <span>${escaparReceber(venda)}</span>
+                            </div>
+                        </div>
+                        <div class="receber-venda-metricas">
+                            <div><span>Parcelas</span><strong>${todasDaVenda.length}</strong></div>
+                            <div><span>Total da venda</span><strong>${moedaReceber(totalVenda)}</strong></div>
+                            <div class="saldo"><span>Em aberto</span><strong>${moedaReceber(saldoVenda)}</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="receber-resumo-venda">
+                        <span>Recebido: <strong>${moedaReceber(recebidoVenda)}</strong></span>
+                        <span>Em aberto: <strong>${moedaReceber(saldoVenda)}</strong></span>
+                    </div>
+
+                    <div class="receber-parcelas">
+                        ${parcelasHtml}
+                    </div>
+
+                    <div class="receber-venda-acoes">
+                        ${podeQuitarTudo ? `<button type="button" class="btn-quitar-total" data-quitar-venda="${escaparReceber(primeira.vendaId)}">✓ Quitar tudo</button>` : ""}
+                        <button type="button" class="btn-ver-detalhes" data-detalhes-venda="${escaparReceber(primeira.vendaId || primeira.id)}">Ver detalhes da venda</button>
+                    </div>
+                </article>`;
+        }).join("");
+    }
 
     /* =====================================================
        ATUALIZAR TODA A INTERFACE
@@ -1674,7 +1422,7 @@
                 </p>
                 <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:14px;margin:12px 0 16px">
                     <span style="display:block;color:#64748b;font-size:12px">Total restante</span>
-                    <strong style="display:block;color:#1557a6;font-size:25px;margin-top:3px">${moedaReceber(total)}</strong>
+                    <strong style="display:block;color:#B8860B;font-size:25px;margin-top:3px">${moedaReceber(total)}</strong>
                 </div>
                 <label style="display:block;font-size:13px;font-weight:700;color:#334155;margin-bottom:6px">Forma de pagamento</label>
                 <select id="formaQuitacaoTotalJC" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:15px;margin-bottom:18px">
@@ -1758,18 +1506,19 @@
             "change",
             function (evento) {
 
-                if (
-                    evento.target &&
-                    evento.target.id ===
-                    "filtroReceber"
-                ) {
-
+                if (evento.target && (evento.target.id === "filtroReceber" || evento.target.id === "buscaReceber")) {
                     atualizarListaReceber();
-
                 }
 
             }
         );
+
+
+        container.addEventListener("input", function (evento) {
+            if (evento.target && evento.target.id === "buscaReceber") {
+                atualizarListaReceber();
+            }
+        });
 
 
         /* -----------------------------------------------
@@ -1803,6 +1552,20 @@
                             : "📁 Recebidos";
 
                     atualizarListaReceber();
+                    return;
+                }
+
+                const botaoDetalhes = evento.target.closest("[data-detalhes-venda]");
+                if (botaoDetalhes) {
+                    const id = botaoDetalhes.getAttribute("data-detalhes-venda");
+                    const conta = JCReceber.listar().find(function (item) {
+                        return String(item.vendaId || item.id) === String(id);
+                    });
+                    if (conta && typeof window.exibirDetalhesVenda === "function") {
+                        window.exibirDetalhesVenda(conta.vendaId || conta.id);
+                    } else if (conta) {
+                        alert("Venda: " + (conta.descricao || conta.vendaId || conta.id));
+                    }
                     return;
                 }
 

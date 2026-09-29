@@ -5404,3 +5404,75 @@ button {
 .despesas-modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;background:#f8fafc;border-top:1px solid #e8edf3;}
 @media(max-width:850px){.despesas-cards{grid-template-columns:1fr 1fr}.despesas-topo{align-items:flex-start;flex-direction:column}.despesas-area-head{align-items:flex-start;flex-direction:column}.despesas-form-grid{grid-template-columns:1fr}.despesas-form-full{grid-column:auto}}
 @media(max-width:520px){.despesas-cards{grid-template-columns:1fr}.despesas-modal-overlay{padding:10px}.despesas-modal-head{padding:18px}.despesas-form-grid{padding:18px}.despesas-modal-foot{padding:14px 18px}}
+
+
+/* =========================================================
+   J.C IMPORTS — A RECEBER 3.2
+   Interface por cliente/venda, otimizada para celular
+   ========================================================= */
+.receber-area{
+    background:#fff;
+    border:1px solid #e7e7e7;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(15,23,42,.05);
+}
+.receber-topo{
+    padding:22px 24px;
+    background:linear-gradient(135deg,#fff 0%,#fafafa 55%,#f3f7ff 100%);
+    border-bottom:1px solid #ececec;
+}
+.receber-titulo-bloco{display:flex;align-items:center;gap:13px;min-width:240px}
+.receber-titulo-icone{
+    width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+    background:linear-gradient(145deg,#72a9f5,#1557a6);color:#fff;font-weight:900;
+    box-shadow:0 6px 15px rgba(21,87,166,.18)
+}
+.receber-filtros{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.receber-busca-wrap{position:relative;display:flex;align-items:center;min-width:280px;flex:1}
+.receber-busca-wrap span{position:absolute;left:13px;color:#9ca3af;font-size:20px;line-height:1;pointer-events:none}
+.receber-busca-wrap input{
+    width:100%;height:42px;border:1px solid #e0e3e8;border-radius:11px;background:#fff;
+    padding:0 14px 0 38px;color:#1f2937;outline:none;font-size:13px;transition:.2s
+}
+.receber-busca-wrap input:focus{border-color:#2f80ed;box-shadow:0 0 0 3px rgba(47,128,237,.12)}
+.receber-filtros select{height:42px;min-width:145px;border:1px solid #e0e3e8;border-radius:11px;background:#fff;color:#374151;padding:0 12px;outline:none}
+.btn-pasta-recebidos{height:42px!important;border:1px solid #cbd9eb!important;background:#fff!important;color:#1557a6!important;border-radius:11px!important;padding:0 14px!important;font-weight:800!important}
+.btn-pasta-recebidos.ativo{background:linear-gradient(135deg,#2f80ed,#1557a6)!important;color:#fff!important;border-color:#1557a6!important}
+.receber-lista-cards{display:flex;flex-direction:column;gap:12px;padding:18px;background:#f8f9fb}
+.receber-venda-card{background:#fff;border:1px solid #e8e8e8;border-radius:17px;overflow:hidden;box-shadow:0 4px 15px rgba(15,23,42,.04)}
+.receber-venda-cabecalho{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 20px;border-bottom:1px solid #f0f0f0}
+.receber-cliente-bloco{display:flex;align-items:center;gap:12px;min-width:220px}
+.receber-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#f3d77e,#1557a6);color:#fff;font-weight:900;flex:0 0 42px}
+.receber-cliente-bloco strong{display:block;color:#1f2937;font-size:15px}
+.receber-cliente-bloco span{display:block;color:#8a9099;font-size:12px;margin-top:3px}
+.receber-venda-metricas{display:flex;align-items:center;gap:28px}
+.receber-venda-metricas div{min-width:80px}
+.receber-venda-metricas span{display:block;color:#8a9099;font-size:11px;margin-bottom:4px}
+.receber-venda-metricas strong{font-size:14px;color:#1f2937}
+.receber-venda-metricas .saldo strong{color:#b42318}
+.receber-resumo-venda{display:flex;gap:24px;padding:11px 20px;background:#fcfcfc;border-bottom:1px solid #f0f0f0;color:#69707a;font-size:12px}
+.receber-resumo-venda strong{color:#1f2937}
+.receber-parcelas{padding:0 20px}
+.receber-parcela-row{display:grid;grid-template-columns:minmax(160px,1fr) 130px 110px 110px;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #f1f1f1}
+.receber-parcela-row:last-child{border-bottom:0}
+.receber-parcela-identidade strong{display:block;font-size:13px;color:#252a31}
+.receber-parcela-identidade span{display:block;font-size:11px;color:#8b919a;margin-top:3px}
+.receber-parcela-valor strong{display:block;font-size:13px;color:#252a31}
+.receber-parcela-valor span{display:block;font-size:10px;color:#8b919a;margin-top:3px}
+.receber-parcela-row .receber-status{justify-self:start}
+.btn-receber-mini{width:100%;min-height:36px;border-radius:9px!important;background:linear-gradient(135deg,#e4bd55,#1557a6)!important;color:#fff!important;border:0!important;font-weight:800!important}
+.receber-pago-mini{font-size:12px;color:#15803d;font-weight:750}
+.receber-venda-acoes{display:flex;justify-content:flex-end;gap:9px;padding:14px 20px;background:#fff;border-top:1px solid #f0f0f0}
+.receber-venda-acoes .btn-quitar-total{min-height:38px;border-radius:9px!important;background:linear-gradient(135deg,#dcb24d,#0f4b91)!important;border:0!important}
+.btn-ver-detalhes{min-height:38px;padding:0 13px;border-radius:9px;border:1px solid #d9dce1;background:#fff;color:#4b5563;font-size:12px;font-weight:750;cursor:pointer}
+.btn-ver-detalhes:hover{border-color:#8eb5e5;color:#1557a6;background:#f4f8ff}
+.receber-vazio-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:48px 20px;text-align:center;background:#fff;border:1px dashed #ddd;border-radius:15px;color:#6b7280}
+.receber-vazio-card strong{color:#374151;font-size:15px}.receber-vazio-card span{font-size:12px}.receber-vazio-icone{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#eef6ff;color:#1557a6;font-weight:900;font-size:20px;margin-bottom:3px}
+@media(max-width:800px){
+    .receber-topo{padding:17px 14px}.receber-titulo-bloco{margin-bottom:14px}.receber-filtros{display:grid;grid-template-columns:1fr 1fr;width:100%}.receber-busca-wrap{grid-column:1/-1;min-width:0}.receber-filtros select,.btn-pasta-recebidos{width:100%!important}.receber-lista-cards{padding:10px;gap:10px}.receber-venda-cabecalho{display:block;padding:15px}.receber-venda-metricas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}.receber-venda-metricas div{min-width:0}.receber-parcelas{padding:0 14px}.receber-parcela-row{grid-template-columns:1fr 1fr;gap:9px;padding:13px 0}.receber-parcela-row .receber-status{justify-self:start}.receber-parcela-acao{grid-column:2}.receber-venda-acoes{padding:12px 14px;display:grid;grid-template-columns:1fr 1fr}.receber-venda-acoes button{width:100%}
+}
+@media(max-width:480px){
+    .receber-resumo{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px;margin-bottom:14px}.receber-card{padding:13px;border-radius:12px}.receber-card span{font-size:11px}.receber-card strong{font-size:17px}.receber-filtros{grid-template-columns:1fr}.receber-busca-wrap{grid-column:auto}.receber-venda-metricas{grid-template-columns:repeat(3,1fr)}.receber-venda-metricas strong{font-size:12px}.receber-venda-metricas span{font-size:10px}.receber-venda-acoes{grid-template-columns:1fr}.receber-parcela-row{grid-template-columns:1fr 1fr}.receber-parcela-valor{text-align:right}.receber-parcela-row .receber-status{grid-column:1}.receber-parcela-acao{grid-column:2;grid-row:2}.btn-receber-mini{min-height:34px}
+}
+

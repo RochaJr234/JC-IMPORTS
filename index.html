@@ -787,22 +787,8 @@
             <div class="receber-resumo">
 
                 <div class="receber-card">
-                    <span>Total a receber</span>
+                    <span>Total em aberto</span>
                     <strong id="receberTotal">
-                        R$ 0,00
-                    </strong>
-                </div>
-
-                <div class="receber-card">
-                    <span>Em aberto</span>
-                    <strong id="receberAberto">
-                        R$ 0,00
-                    </strong>
-                </div>
-
-                <div class="receber-card">
-                    <span>Recebido</span>
-                    <strong id="receberRecebido">
                         R$ 0,00
                     </strong>
                 </div>
@@ -814,104 +800,55 @@
                     </strong>
                 </div>
 
-            </div>
+                <div class="receber-card">
+                    <span>Vence hoje</span>
+                    <strong id="receberHoje">
+                        R$ 0,00
+                    </strong>
+                </div>
 
+                <div class="receber-card">
+                    <span>Recebido este mês</span>
+                    <strong id="receberMes">
+                        R$ 0,00
+                    </strong>
+                </div>
+
+            </div>
 
             <div class="receber-area">
 
                 <div class="receber-topo">
 
-                    <div>
-                        <h2>
-                            Contas a receber
-                        </h2>
-
-                        <p>
-                            Acompanhe as vendas realizadas a prazo.
-                        </p>
+                    <div class="receber-titulo-bloco">
+                        <div class="receber-titulo-icone">$</div>
+                        <div>
+                            <h2>Contas a receber</h2>
+                            <p>Visualize clientes, parcelas e recebimentos de forma simples.</p>
+                        </div>
                     </div>
 
                     <div class="receber-filtros">
-
+                        <div class="receber-busca-wrap">
+                            <span>⌕</span>
+                            <input id="buscaReceber" type="search" placeholder="Buscar cliente ou venda..." autocomplete="off">
+                        </div>
                         <select id="filtroReceber">
-
-                            <option value="aberto" selected>
-                                Em aberto
-                            </option>
-
-                            <option value="vencido">
-                                Vencidos
-                            </option>
-
+                            <option value="aberto" selected>Em aberto</option>
+                            <option value="vencido">Vencidos</option>
+                            <option value="recebido">Recebidos</option>
                         </select>
-
-                        <button
-                            type="button"
-                            id="btnPastaRecebidos"
-                            class="btn-pasta-recebidos"
-                            title="Abrir valores já recebidos"
-                        >
-                            📁 Recebidos
-                        </button>
-
+                        <button type="button" id="btnPastaRecebidos" class="btn-pasta-recebidos" title="Abrir valores já recebidos">📁 Recebidos</button>
                     </div>
 
                 </div>
 
-
-                <div class="receber-tabela-wrapper">
-
-                    <table class="receber-tabela">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Cliente
-                                </th>
-
-                                <th>
-                                    Venda
-                                </th>
-
-                                <th>
-                                    Vencimento
-                                </th>
-
-                                <th>
-                                    Valor
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                                <th>
-                                    Ação
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody id="listaReceber">
-
-                            <tr>
-
-                                <td
-                                    colspan="6"
-                                    class="receber-vazio"
-                                >
-                                    Nenhuma conta a receber.
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
+                <div id="listaReceber" class="receber-lista-cards">
+                    <div class="receber-vazio-card">
+                        <div class="receber-vazio-icone">✓</div>
+                        <strong>Nenhuma conta a receber</strong>
+                        <span>As vendas a prazo aparecerão aqui.</span>
+                    </div>
                 </div>
 
             </div>
@@ -2752,15 +2689,15 @@
         <div>
 
             <span class="eyebrow">
-                
+                Segurança
             </span>
 
             <h1>
-            
+                Backup
             </h1>
 
             <p>
-            
+                Proteja e restaure os dados do sistema.
             </p>
 
         </div>
@@ -2864,15 +2801,15 @@
                     <div>
 
                         <span class="eyebrow">
-                        
+                            Sistema
                         </span>
 
                         <h1>
-                        
+                            Configurações
                         </h1>
 
                         <p>
-                            
+                            Configure os dados do J.C Imports.
                         </p>
 
                     </div>
@@ -2971,7 +2908,7 @@
 
 <script src="JS/recibo.js?v=2.4.0"></script>
 
-<script src="JS/receber.js?v=3.3.2"></script>
+<script src="JS/receber.js?v=3.4.0"></script>
 <script src="JS/relatorios.js?v=1.1.0"></script>
 <script src="JS/despesas.js?v=1.0.0"></script>
 
