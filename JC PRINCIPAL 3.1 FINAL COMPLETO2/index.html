@@ -1,0 +1,3361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#1557a6"
+    >
+
+    <meta
+        name="description"
+        content="Sistema de controle interno J.C Imports"
+    >
+
+    <title>J.C Imports</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="J.C Imports">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css?v=2.3.0">
+    <link rel="stylesheet" href="css/dashboard.css?v=2.3.0">
+    <link rel="stylesheet" href="css/responsive.css?v=2.3.0">
+     
+
+<style id="jc-cloud-guaranteed-style">
+#nuvemContent{display:block!important;visibility:visible!important;opacity:1!important;width:100%;margin-top:20px}
+#nuvemContent .jc-cloud-card{display:block!important;visibility:visible!important;opacity:1!important;background:#fff!important;border:1px solid #d9e2ef!important;border-radius:16px!important;padding:24px!important;box-shadow:0 8px 24px rgba(16,40,70,.08)!important;color:#101828!important}
+#nuvemContent .jc-cloud-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+#nuvemContent label{display:block!important;color:#344054!important;font-weight:600!important}
+#nuvemContent input{display:block!important;width:100%!important;box-sizing:border-box!important;margin-top:7px!important;padding:12px!important;border:1px solid #d0d5dd!important;border-radius:9px!important;background:#fff!important;color:#101828!important}
+#nuvemContent .jc-cloud-actions{display:flex!important;flex-wrap:wrap!important;gap:10px!important;margin-top:20px}
+#nuvemContent button{display:inline-flex!important;visibility:visible!important;opacity:1!important;padding:11px 15px!important;border:0!important;border-radius:9px!important;background:#1557a6!important;color:#fff!important;cursor:pointer!important}
+#nuvemContent .jc-cloud-status{display:inline-block!important;padding:7px 10px!important;border-radius:999px!important;background:#eef2f6!important}
+#nuvemContent .jc-cloud-info{display:block!important;margin-top:16px!important;color:#667085!important}
+@media(max-width:700px){#nuvemContent .jc-cloud-grid{grid-template-columns:1fr!important}.jc-cloud-head{display:block!important}}
+</style>
+
+<style>
+.jc-backup-card{max-width:900px;margin:10px auto;padding:28px;border:1px solid #e3e8ef;border-radius:18px;background:#fff;box-shadow:0 10px 30px rgba(15,23,42,.06);}
+.jc-backup-head h2{margin:0 0 8px;font-size:22px;color:#172033}.jc-backup-head p{margin:0;color:#667085;line-height:1.6}.jc-backup-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.jc-backup-actions button{border:0;border-radius:10px;padding:13px 18px;cursor:pointer;font-weight:600}.jc-backup-actions button:first-child{background:#1f6feb;color:#fff}.jc-backup-actions .secondary{background:#eef2f7;color:#172033}.jc-backup-info{margin-top:18px;padding:14px;border-radius:10px;background:#f7f9fc;color:#667085;font-size:13px}.jc-backup-reset{margin-top:10px;text-align:right}.jc-backup-reset button{border:0;background:transparent;color:#98a2b3;font-size:11px;padding:4px 6px;cursor:pointer;opacity:.65}.jc-backup-reset button:hover{color:#667085;opacity:1;text-decoration:underline}
+@media(max-width:1100px){
+  .jc-backup-card{max-width:none!important;width:100%!important;margin:0!important;padding:18px!important;box-sizing:border-box!important;border-radius:14px!important;}
+  .jc-backup-actions{flex-direction:column!important;}
+  .jc-backup-actions button{width:100%!important;box-sizing:border-box!important;}
+}
+@media(max-width:700px){
+  #nuvemContent .jc-cloud-card{padding:16px!important;border-radius:14px!important;}
+  #nuvemContent .jc-cloud-grid{grid-template-columns:1fr!important;gap:12px!important;}
+  #nuvemContent .jc-cloud-actions{flex-direction:column!important;}
+  #nuvemContent .jc-cloud-actions button{width:100%!important;box-sizing:border-box!important;}
+  .jc-backup-head h2{font-size:20px!important;}
+  .jc-backup-actions{margin-top:18px!important;gap:10px!important;}
+}
+</style>
+
+<style id="jc-splash-style">
+/* =========================================================
+   SPLASH DE ABERTURA — CÍRCULO COM LOGO
+   ========================================================= */
+.jc-splash{
+  position:fixed;
+  inset:0;
+  z-index:9999999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#06285b 0%,#0b4f9f 58%,#087bc4 100%);
+  opacity:1;
+  visibility:visible;
+  transition:opacity .55s ease,visibility .55s ease;
+}
+.jc-splash.is-hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.jc-splash-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  color:#fff;
+  text-align:center;
+  transform:translateY(0);
+  animation:jcSplashEnter .65s ease both;
+}
+.jc-splash-inner strong{
+  margin-top:13px;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:.2px;
+}
+.jc-splash-inner span{
+  font-size:12px;
+  color:rgba(255,255,255,.72);
+  letter-spacing:.35px;
+}
+.jc-splash-logo-wrap{
+  position:relative;
+  width:178px;
+  height:178px;
+  display:grid;
+  place-items:center;
+}
+.jc-splash-progress{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  transform:rotate(-90deg);
+  filter:drop-shadow(0 0 8px rgba(54,190,255,.28));
+}
+.jc-splash-track,
+.jc-splash-ring{
+  fill:none;
+  stroke-width:8;
+}
+.jc-splash-track{
+  stroke:rgba(255,255,255,.16);
+}
+.jc-splash-ring{
+  stroke:#32c4ff;
+  stroke-linecap:round;
+  stroke-dasharray:540.35;
+  stroke-dashoffset:540.35;
+  animation:jcSplashProgress 1.55s cubic-bezier(.22,.75,.28,1) forwards;
+}
+.jc-splash-logo{
+  width:118px;
+  height:118px;
+  padding:7px;
+  border-radius:50%;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 15px 40px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.2);
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+}
+.jc-splash-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  display:block;
+}
+@keyframes jcSplashProgress{
+  from{stroke-dashoffset:540.35;}
+  to{stroke-dashoffset:0;}
+}
+@keyframes jcSplashEnter{
+  from{opacity:0;transform:translateY(10px) scale(.96);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+@media(max-width:600px){
+  .jc-splash-logo-wrap{width:154px;height:154px;}
+  .jc-splash-logo{width:102px;height:102px;}
+  .jc-splash-inner strong{font-size:20px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .jc-splash-ring{animation:none;stroke-dashoffset:0;}
+  .jc-splash-inner{animation:none;}
+}
+</style>
+
+</head>
+
+
+<body>
+
+<!-- =====================================================
+     SPLASH DE ABERTURA — J.C IMPORTS
+     Carregamento circular com a logo central
+     ===================================================== -->
+<div id="jcSplash" class="jc-splash" aria-label="Carregando J.C Imports">
+    <div class="jc-splash-inner">
+        <div class="jc-splash-logo-wrap">
+            <svg class="jc-splash-progress" viewBox="0 0 200 200" aria-hidden="true">
+                <circle class="jc-splash-track" cx="100" cy="100" r="86"></circle>
+                <circle class="jc-splash-ring" cx="100" cy="100" r="86"></circle>
+            </svg>
+            <div class="jc-splash-logo">
+                <img src="images/icon.png?v=3.1" alt="J.C Imports">
+            </div>
+        </div>
+        <strong>J.C Imports</strong>
+        <span>Carregando sistema...</span>
+    </div>
+</div>
+
+<div id="app">
+
+
+    <!-- =====================================================
+         MENU LATERAL
+         ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <div class="brand">
+
+                <img
+                    src="images/icon.png?v=3.0"
+                    alt="Logo J.C Imports"
+                    class="brand-logo"
+                >
+
+                <div class="brand-info">
+
+                    <strong>
+                        J.C Imports
+                    </strong>
+
+                    <span>
+                        Controle interno
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Fechar menu"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <nav
+            class="sidebar-nav"
+            aria-label="Menu principal"
+        >
+
+            <button
+                type="button"
+                class="nav-item active"
+                data-page="dashboard"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Início
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="vendas"
+            >
+
+                <span class="nav-icon">
+                    ＋
+                </span>
+
+                <span>
+                    Vendas
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="produtos"
+            >
+
+                <span class="nav-icon">
+                    ▣
+                </span>
+
+                <span>
+                    Produtos
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="compras"
+            >
+
+                <span class="nav-icon">
+                    ↓
+                </span>
+
+                <span>
+                    Compras
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="clientes"
+            >
+
+                <span class="nav-icon">
+                    ♙
+                </span>
+
+                <span>
+                    Clientes
+                </span>
+
+            </button>
+
+
+
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="receber"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    A receber
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="despesas"
+            >
+
+                <span class="nav-icon">
+                    R$
+                </span>
+
+                <span>
+                    Despesas
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="relatorios"
+            >
+
+                <span class="nav-icon">
+                    ▤
+                </span>
+
+                <span>
+                    Relatórios
+                </span>
+
+            </button>
+
+
+            <div class="nav-divider"></div>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="backup"
+                onclick="window.__JC_OPEN_BACKUP && window.__JC_OPEN_BACKUP()"
+            >
+
+                <span class="nav-icon">
+                    ⇩
+                </span>
+
+                <span>
+                    Backup
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="configuracoes"
+                onclick="window.__JC_OPEN_CONFIG && window.__JC_OPEN_CONFIG()"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span>
+                    Configurações
+                </span>
+
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <span>
+                R.D Rocha Digital
+                (81) 9 9754-4647
+            </span>
+
+            <small>
+                Densevolvimento de sistemas e soluções digitais.
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         ÁREA PRINCIPAL
+         ===================================================== -->
+
+    <div class="main-area">
+
+
+        <header class="topbar">
+
+
+            <button
+                type="button"
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Abrir menu"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <span id="pageTitle">
+                    Início
+                </span>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <div class="topbar-brand-image" title="J.C Imports">
+                    <img
+                        src="images/icon.png?v=3.0"
+                        alt="J.C Imports"
+                    >
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CONTEÚDO
+             ================================================= -->
+
+        <main
+            class="content"
+            id="appContent"
+        >
+
+
+            <!-- =================================================
+                 DASHBOARD
+                 ================================================= -->
+
+            <section
+                class="page active"
+                id="page-dashboard"
+                data-page-content="dashboard"
+            >
+
+                <div class="dashboard-welcome">
+                    <div class="dashboard-welcome-copy">
+                        <span class="dashboard-eyebrow">J.C IMPORTS</span>
+                        <h1>Painel de Controle</h1>
+                        <p>Controle suas vendas, produtos e financeiro em um só lugar.</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-main-hero">
+                    <div class="dashboard-hero-glow dashboard-hero-glow-one"></div>
+                    <div class="dashboard-hero-glow dashboard-hero-glow-two"></div>
+                    <div class="dashboard-wave dashboard-wave-one"></div>
+                    <div class="dashboard-wave dashboard-wave-two"></div>
+
+                    <div class="dashboard-main-copy">
+                        <span class="dashboard-main-kicker">PAINEL DE CONTROLE</span>
+                        <h2>J.C Imports</h2>
+                        <h3>Seu negócio em um só lugar.</h3>
+                        <p>Acompanhe vendas, estoque e financeiro de forma rápida e organizada.</p>
+                    </div>
+
+                    <div class="dashboard-main-logo">
+                        <img src="images/icon.png?v=3.0" alt="J.C Imports">
+                        <span>IMPORTS</span>
+                    </div>
+
+                    <div class="dashboard-growth">
+                        <span class="dashboard-growth-arrow">↗</span>
+                        <div class="dashboard-growth-bars">
+                            <i></i><i></i><i></i><i></i><i></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-overview-cards">
+                    <article class="dashboard-overview-card overview-sales">
+                        <div class="overview-icon">↗</div>
+                        <div class="overview-copy">
+                            <span>Vendas hoje</span>
+                            <strong id="dashboardSalesToday">R$ 0,00</strong>
+                            <small>Total vendido hoje</small>
+                        </div>
+                    </article>
+
+                    <article class="dashboard-overview-card overview-products">
+                        <div class="overview-icon">□</div>
+                        <div class="overview-copy">
+                            <span>Produtos</span>
+                            <strong id="dashboardProductsCount">0</strong>
+                            <small>cadastrados</small>
+                        </div>
+                    </article>
+
+                    <article class="dashboard-overview-card overview-clients">
+                        <div class="overview-icon">♙</div>
+                        <div class="overview-copy">
+                            <span>Clientes</span>
+                            <strong id="dashboardClientsCount">0</strong>
+                            <small>cadastrados</small>
+                        </div>
+                    </article>
+
+                    <article class="dashboard-overview-card overview-receivable">
+                        <div class="overview-icon">R$</div>
+                        <div class="overview-copy">
+                            <span>Contas a receber</span>
+                            <strong id="dashboardReceivable">R$ 0,00</strong>
+                            <small>pendentes</small>
+                        </div>
+                    </article>
+                </div>
+
+                <section class="dashboard-quick-panel">
+                    <div class="dashboard-section-heading">
+                        <div>
+                            <span class="dashboard-section-kicker">RESUMO RÁPIDO</span>
+                            <h2>Movimentação do negócio</h2>
+                            <p>Uma visão financeira dos valores registrados no sistema.</p>
+                        </div>
+                        <div class="dashboard-today-pill">Hoje</div>
+                    </div>
+
+                    <div class="dashboard-quick-grid">
+                        <article class="dashboard-quick-card quick-sales">
+                            <div class="quick-icon">↗</div>
+                            <span>Vendas</span>
+                            <strong id="dashboardSalesMonth">R$ 0,00</strong>
+                            <small>no mês</small>
+                        </article>
+
+                        <article class="dashboard-quick-card quick-income">
+                            <div class="quick-icon">↗</div>
+                            <span>Entradas</span>
+                            <strong id="dashboardIncome">R$ 0,00</strong>
+                            <small>registradas</small>
+                        </article>
+
+                        <article class="dashboard-quick-card quick-expense">
+                            <div class="quick-icon">↘</div>
+                            <span>Saídas</span>
+                            <strong id="dashboardExpense">R$ 0,00</strong>
+                            <small>registradas</small>
+                        </article>
+
+                        <article class="dashboard-quick-card quick-balance">
+                            <div class="quick-icon">R$</div>
+                            <span>Saldo de caixa</span>
+                            <strong id="dashboardBalance">R$ 0,00</strong>
+                            <small>entradas − saídas</small>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="dashboard-profit-panel">
+                    <div class="dashboard-section-heading">
+                        <div>
+                            <span class="dashboard-section-kicker">RESULTADO DO MÊS</span>
+                            <h2>Lucro do negócio</h2>
+                            <p>O lucro é calculado pelas vendas menos o custo dos produtos vendidos e as despesas operacionais.</p>
+                        </div>
+                        <div class="dashboard-today-pill">Mês atual</div>
+                    </div>
+
+                    <div class="dashboard-profit-grid">
+                        <article class="dashboard-profit-card">
+                            <span>Faturamento</span>
+                            <strong id="dashboardProfitRevenue">R$ 0,00</strong>
+                            <small>vendas do mês</small>
+                        </article>
+                        <article class="dashboard-profit-card">
+                            <span>Custo das vendas</span>
+                            <strong id="dashboardProfitCost">R$ 0,00</strong>
+                            <small>custo dos produtos vendidos</small>
+                        </article>
+                        <article class="dashboard-profit-card dashboard-profit-highlight">
+                            <span>Lucro bruto</span>
+                            <strong id="dashboardGrossProfit">R$ 0,00</strong>
+                            <small>faturamento − custo</small>
+                        </article>
+                        <article class="dashboard-profit-card">
+                            <span>Despesas</span>
+                            <strong id="dashboardProfitExpenses">R$ 0,00</strong>
+                            <small>despesas operacionais</small>
+                        </article>
+                        <article class="dashboard-profit-card dashboard-profit-final">
+                            <span>Lucro líquido</span>
+                            <strong id="dashboardNetProfit">R$ 0,00</strong>
+                            <small>resultado estimado do mês</small>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="dashboard-bottom-grid">
+                    <article class="dashboard-performance-panel">
+                        <div class="dashboard-section-heading compact">
+                            <div>
+                                <span class="dashboard-section-kicker">ESTOQUE</span>
+                                <h2>Valor investido em produtos</h2>
+                            </div>
+                            <div class="dashboard-stock-value" id="dashboardStock">R$ 0,00</div>
+                        </div>
+                        <div class="dashboard-stock-track">
+                            <span></span>
+                        </div>
+                        <p class="dashboard-panel-note">Acompanhe o valor atual do estoque pelo custo médio dos produtos.</p>
+                    </article>
+
+                    <article class="dashboard-performance-panel dashboard-recent-panel" id="dashboardRecentSalesPanel">
+                        <div class="dashboard-section-heading compact dashboard-activity-heading">
+                            <div>
+                                <span class="dashboard-section-kicker">ATIVIDADE</span>
+                                <h2>Últimas vendas</h2>
+                            </div>
+                            <button
+                                type="button"
+                                class="dashboard-activity-toggle"
+                                id="recentSalesToggle"
+                                aria-expanded="true"
+                                aria-controls="recentSalesContent"
+                                title="Recolher últimas vendas"
+                            >
+                                <span aria-hidden="true">⌃</span>
+                                <span class="sr-only">Recolher últimas vendas</span>
+                            </button>
+                        </div>
+                        <div class="dashboard-activity-content" id="recentSalesContent">
+                            <div class="empty-state dashboard-empty" id="recentSalesEmpty">
+                                <div class="empty-icon">—</div>
+                                <strong>Nenhuma venda registrada</strong>
+                                <span>As vendas realizadas aparecerão aqui.</span>
+                            </div>
+                            <div class="recent-sales-list" id="recentSalesList" hidden></div>
+                        </div>
+                    </article>
+                </section>
+
+            </section>
+
+
+            <!-- =================================================
+                 VENDAS
+                 ================================================= -->
+
+            <section
+                class="page"
+                id="page-vendas"
+                data-page-content="vendas"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            Operações
+                        </span>
+
+                        <h1>
+                            Vendas
+                        </h1>
+
+                        <p>
+                            Registre e acompanhe suas vendas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="vendasContent"></div>
+
+            </section>
+
+<!-- =================================================
+     A RECEBER
+     ================================================= -->
+
+<section
+    class="page"
+    id="page-receber"
+    data-page-content="receber"
+    hidden
+>
+
+    <div class="page-heading">
+
+        <div>
+            <span class="eyebrow">
+                Financeiro
+            </span>
+
+            <h1>
+                A receber
+            </h1>
+
+            <p>
+                Controle as vendas realizadas a prazo.
+            </p>
+        </div>
+
+    </div>
+
+    <div id="receberContent">
+
+        <div class="receber-painel">
+
+            <div class="receber-resumo">
+
+                <div class="receber-card">
+                    <span>Total em aberto</span>
+                    <strong id="receberTotal">
+                        R$ 0,00
+                    </strong>
+                </div>
+
+                <div class="receber-card">
+                    <span>Vencido</span>
+                    <strong id="receberVencido">
+                        R$ 0,00
+                    </strong>
+                </div>
+
+                <div class="receber-card">
+                    <span>Vence hoje</span>
+                    <strong id="receberHoje">
+                        R$ 0,00
+                    </strong>
+                </div>
+
+                <div class="receber-card">
+                    <span>Recebido este mês</span>
+                    <strong id="receberMes">
+                        R$ 0,00
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="receber-area">
+
+                <div class="receber-topo">
+
+                    <div class="receber-titulo-bloco">
+                        <div class="receber-titulo-icone">$</div>
+                        <div>
+                            <h2>Contas a receber</h2>
+                            <p>Visualize clientes, parcelas e recebimentos de forma simples.</p>
+                        </div>
+                    </div>
+
+                    <div class="receber-filtros">
+                        <div class="receber-busca-wrap">
+                            <span>⌕</span>
+                            <input id="buscaReceber" type="search" placeholder="Buscar cliente ou venda..." autocomplete="off">
+                        </div>
+                        <select id="filtroReceber">
+                            <option value="aberto" selected>Em aberto</option>
+                            <option value="vencido">Vencidos</option>
+                            <option value="recebido">Recebidos</option>
+                        </select>
+                        <button type="button" id="btnPastaRecebidos" class="btn-pasta-recebidos" title="Abrir valores já recebidos">📁 Recebidos</button>
+                    </div>
+
+                </div>
+
+                <div id="listaReceber" class="receber-lista-cards">
+                    <div class="receber-vazio-card">
+                        <div class="receber-vazio-icone">✓</div>
+                        <strong>Nenhuma conta a receber</strong>
+                        <span>As vendas a prazo aparecerão aqui.</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+            <!-- =================================================
+                 PRODUTOS
+                 ================================================= -->
+
+            <section
+                class="page"
+                id="page-produtos"
+                data-page-content="produtos"
+                hidden
+            >
+
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            Estoque
+                        </span>
+
+                        <h1>
+                            Produtos
+                        </h1>
+
+                        <p>
+                            Cadastre os produtos. As compras e entradas de estoque
+                            são registradas no módulo Compras.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        id="btnNovoProduto"
+                    >
+                        + Novo produto
+                    </button>
+
+                </div>
+
+
+
+                <!-- RESUMO DO ESTOQUE -->
+
+                <div class="dashboard-cards">
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Produtos
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="produtosTotal"
+                        >
+                            0
+                        </strong>
+
+                        <small>
+                            Produtos cadastrados
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Estoque
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="produtosQuantidadeEstoque"
+                        >
+                            0
+                        </strong>
+
+                        <small>
+                            Unidades disponíveis
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Investimento
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="produtosValorCusto"
+                        >
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Valor de custo em estoque
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Valor de venda
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="produtosValorVenda"
+                        >
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Valor potencial do estoque
+                        </small>
+
+                    </article>
+
+                </div>
+
+<!-- =================================================
+     PASTA DE PRODUTOS
+     ================================================= -->
+
+<section
+    id="pastaProdutos"
+    style="
+        width:100%;
+        margin-top:20px;
+        border:1px solid #dfe5eb;
+        border-radius:16px;
+        background:#ffffff;
+        box-shadow:0 4px 18px rgba(15,35,55,.07);
+        overflow:hidden;
+    "
+>
+
+    <!-- BOTÃO DA PASTA -->
+
+    <button
+        type="button"
+        id="abrirPastaProdutos"
+        onclick="abrirProdutosCadastrados()"
+        style="
+            width:100%;
+            min-height:92px;
+            display:flex;
+            align-items:center;
+            gap:16px;
+            padding:17px 20px;
+            border:0;
+            background:linear-gradient(135deg,#ffffff,#f5f9ff);
+            color:#17212b;
+            text-align:left;
+            cursor:pointer;
+            -webkit-tap-highlight-color:transparent;
+        "
+    >
+
+        <!-- ÍCONE -->
+
+        <span
+            style="
+                width:58px;
+                height:58px;
+                min-width:58px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                border-radius:14px;
+                background:#e8f2ff;
+                color:#1557a6;
+                font-size:30px;
+            "
+        >
+            📁
+        </span>
+
+
+        <!-- INFORMAÇÕES -->
+
+        <span
+            style="
+                flex:1;
+                min-width:0;
+                display:flex;
+                flex-direction:column;
+                gap:4px;
+            "
+        >
+
+            <strong
+                style="
+                    color:#17212b;
+                    font-size:16px;
+                    font-weight:750;
+                "
+            >
+                Produtos cadastrados
+            </strong>
+
+
+            <span
+                style="
+                    color:#687582;
+                    font-size:12px;
+                "
+            >
+
+                <b
+                    id="produtosTotalPasta"
+                    style="
+                        color:#1557a6;
+                        font-weight:750;
+                    "
+                >
+                    0
+                </b>
+
+                produtos cadastrados
+
+            </span>
+
+        </span>
+
+
+        <!-- SETA -->
+
+        <span
+            id="setaPastaProdutos"
+            style="
+                width:38px;
+                height:38px;
+                min-width:38px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                border-radius:10px;
+                background:#f1f5f9;
+                color:#687582;
+                font-size:28px;
+                line-height:1;
+                transition:transform .2s ease;
+            "
+        >
+            ›
+        </span>
+
+    </button>
+
+
+
+    <!-- =================================================
+         CONTEÚDO DA PASTA
+         ================================================= -->
+
+    <div
+        id="conteudoPastaProdutos"
+        style="
+            display:none;
+            border-top:1px solid #e6ebf0;
+            background:#ffffff;
+        "
+    >
+
+        <!-- CABEÇALHO -->
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:15px;
+                padding:18px 20px;
+                background:#fafcfe;
+                border-bottom:1px solid #e8edf1;
+            "
+        >
+
+            <div>
+
+                <h2
+                    style="
+                        margin:0 0 3px;
+                        color:#17212b;
+                        font-size:17px;
+                    "
+                >
+                    Produtos cadastrados
+                </h2>
+
+                <span
+                    style="
+                        color:#687582;
+                        font-size:12px;
+                    "
+                >
+                    Consulte, edite e controle seus produtos.
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="fecharProdutosCadastrados()"
+                style="
+                    min-height:40px;
+                    padding:9px 15px;
+                    border:1px solid #d8dee4;
+                    border-radius:9px;
+                    background:#ffffff;
+                    color:#45515d;
+                    font-weight:600;
+                    cursor:pointer;
+                "
+            >
+                Fechar
+            </button>
+
+        </div>
+
+
+
+        <!-- PESQUISA -->
+
+        <div
+            style="
+                padding:17px 20px;
+                border-bottom:1px solid #edf0f3;
+            "
+        >
+
+            <input
+                type="search"
+                id="pesquisaProdutos"
+                class="form-control"
+                placeholder="Pesquisar produto..."
+                style="
+                    width:100%;
+                "
+            >
+
+        </div>
+
+
+
+        <!-- =================================================
+             TABELA
+             ================================================= -->
+
+        <div
+            class="table-responsive"
+            style="
+                width:100%;
+                overflow-x:auto;
+                -webkit-overflow-scrolling:touch;
+            "
+        >
+
+            <table
+                class="data-table"
+                style="
+                    width:100%;
+                    min-width:680px;
+                "
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>Código</th>
+
+                        <th>Produto</th>
+
+                        <th>Estoque</th>
+
+                        <th>Custo atual</th>
+
+                        <th>Venda atual</th>
+
+                        <th>Status</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="listaProdutos">
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty-table"
+                        >
+                            Nenhum produto cadastrado.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+                <!-- =================================================
+                     MODAL PRODUTO
+                     ================================================= -->
+
+                <div
+                    class="modal-overlay"
+                    id="modalProduto"
+                    hidden
+                >
+
+                    <div class="modal">
+
+
+                        <div class="modal-header">
+
+                            <div>
+
+                                <h3 id="tituloModalProduto">
+                                    Novo produto
+                                </h3>
+
+                                <p>
+                                    Cadastre o produto para revenda.
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="modal-close"
+                                id="fecharModalProduto"
+                                aria-label="Fechar"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+
+
+                        <form id="formProduto">
+
+                            <input
+                                type="hidden"
+                                id="produtoId"
+                            >
+
+
+                            <div class="form-grid">
+
+
+                                <div class="form-group">
+
+                                    <label for="produtoCodigo">
+                                        Código
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="produtoCodigo"
+                                        class="form-control"
+                                        readonly
+                                        placeholder="Gerado automaticamente"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="produtoNome">
+                                        Nome do produto *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="produtoNome"
+                                        class="form-control"
+                                        placeholder="Ex.: AirPods Pro 2"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="produtoCategoria">
+                                        Categoria
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="produtoCategoria"
+                                        class="form-control"
+                                        placeholder="Ex.: Eletrônicos"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="produtoDescricao">
+                                        Descrição
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="produtoDescricao"
+                                        class="form-control"
+                                        placeholder="Descrição opcional"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="produtoEstoqueMinimo">
+                                        Estoque mínimo
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="produtoEstoqueMinimo"
+                                        class="form-control"
+                                        min="0"
+                                        step="1"
+                                        value="1"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="modal-footer">
+
+
+                                <button
+                                    type="button"
+                                    class="secondary-button"
+                                    id="cancelarProduto"
+                                >
+                                    Cancelar
+                                </button>
+
+
+                                <button
+                                    type="submit"
+                                    class="primary-button"
+                                >
+                                    Salvar produto
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+            <!-- =================================================
+                 COMPRAS
+                 ================================================= -->
+
+            <section
+                class="page"
+                id="page-compras"
+                data-page-content="compras"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            Estoque / Investimento
+                        </span>
+
+                        <h1>
+                            Compras
+                        </h1>
+
+                        <p>
+                            Registre as mercadorias compradas e atualize o estoque automaticamente.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-cards">
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Compras registradas
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="comprasTotal"
+                        >
+                            0
+                        </strong>
+
+                        <small>
+                            Operações de compra
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Investimento em compras
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="comprasInvestimento"
+                        >
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Total registrado nas compras
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Compras em trânsito
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="comprasEmTransito"
+                        >
+                            0
+                        </strong>
+
+                        <small>
+                            Produtos aguardando chegada
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Valor em trânsito
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="comprasValorEmTransito"
+                        >
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Investimento ainda não recebido
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Lucro unitário
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="compraLucroPreview"
+                        >
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Conforme compra e venda informadas
+                        </small>
+
+                    </article>
+
+
+                    <article class="dashboard-card">
+
+                        <span class="card-label">
+                            Margem
+                        </span>
+
+                        <strong
+                            class="card-value"
+                            id="compraMargemPreview"
+                        >
+                            0,00%
+                        </strong>
+
+                        <small>
+                            Margem sobre o preço de venda
+                        </small>
+
+                    </article>
+
+                </div>
+
+
+                <section class="content-card">
+
+                    <div class="content-card-header">
+
+                        <div>
+
+                            <h2>
+                                Nova compra
+                            </h2>
+
+                            <p>
+                                Registre a compra. Se a mercadoria ainda estiver a caminho, ela ficará em trânsito e só entrará no estoque após o recebimento.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form id="formCompra">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="compraProduto">
+                                    Produto *
+                                </label>
+
+                                <select
+                                    id="compraProduto"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">
+                                        Selecione um produto
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="compraQuantidade">
+                                    Quantidade *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="compraQuantidade"
+                                    class="form-control"
+                                    min="1"
+                                    step="1"
+                                    value="1"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="compraCusto">
+                                    Valor de compra por unidade *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="compraCusto"
+                                    class="form-control"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="0,00"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="compraVenda">
+                                    Valor de venda por unidade *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="compraVenda"
+                                    class="form-control"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="0,00"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="compraSituacao">
+                                    Situação da mercadoria *
+                                </label>
+
+                                <select
+                                    id="compraSituacao"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="transito">Aguardando chegada</option>
+                                    <option value="recebida">Mercadoria já recebida</option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="compraPrevisaoEntrega">
+                                    Previsão de entrega
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="compraPrevisaoEntrega"
+                                    class="form-control"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="compraPagamento">
+                                    Forma de pagamento *
+                                </label>
+
+                                <select
+                                    id="compraPagamento"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="dinheiro">
+                                        Dinheiro
+                                    </option>
+
+                                    <option value="pix">
+                                        Pix
+                                    </option>
+
+                                    <option value="cartao">
+                                        Cartão
+                                    </option>
+
+                                    <option value="prazo">
+                                        Prazo
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group" id="campoParcelasCompra" hidden>
+
+                                <label for="compraParcelas">
+                                    Parcelamento
+                                </label>
+
+                                <select
+                                    id="compraParcelas"
+                                    class="form-control"
+                                >
+                                    <option value="1">1x</option>
+                                    <option value="2">2x</option>
+                                    <option value="3">3x</option>
+                                    <option value="4">4x</option>
+                                    <option value="5">5x</option>
+                                    <option value="6">6x</option>
+                                    <option value="7">7x</option>
+                                    <option value="8">8x</option>
+                                    <option value="9">9x</option>
+                                    <option value="10">10x</option>
+                                    <option value="11">11x</option>
+                                    <option value="12">12x</option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group" id="campoPrimeiraParcelaCompra" hidden>
+
+                                <label for="compraPrimeiraParcela">
+                                    Data da 1ª parcela
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="compraPrimeiraParcela"
+                                    class="form-control"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group" id="campoVencimentoCompra" hidden>
+
+                                <label for="compraVencimento">
+                                    Data de vencimento
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="compraVencimento"
+                                    class="form-control"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="compraData">
+                                    Data da compra *
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="compraData"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group" style="grid-column:1/-1;">
+
+                                <label for="compraObservacoes">
+                                    Observação
+                                </label>
+
+                                <textarea
+                                    id="compraObservacoes"
+                                    class="form-control"
+                                    rows="3"
+                                    placeholder="Observação opcional"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="avisoCompraPrazo"
+                            hidden
+                            style="
+                                margin-top:14px;
+                                padding:12px 14px;
+                                border-radius:10px;
+                                background:#fff7e6;
+                                border:1px solid #f2d28a;
+                                color:#795b13;
+                                font-size:13px;
+                            "
+                        >
+                            Compra a prazo: o estoque será atualizado e a compra ficará registrada,
+                            mas não será lançada como saída financeira até existir um módulo de
+                            contas a pagar.
+                        </div>
+
+
+                        <div class="modal-footer" style="padding-left:0;padding-right:0;">
+
+                            <button
+                                type="reset"
+                                class="secondary-button"
+                                id="limparCompra"
+                            >
+                                Limpar
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="primary-button"
+                            >
+                                Registrar compra
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+
+                <section class="jc-folder" id="pastaCompras">
+
+                    <button
+                        type="button"
+                        class="jc-folder-toggle"
+                        id="abrirPastaCompras"
+                        aria-expanded="false"
+                    >
+                        <span class="jc-folder-icon">📁</span>
+                        <span class="jc-folder-info">
+                            <strong>Histórico de compras</strong>
+                            <small><b id="comprasTotalPasta">0</b> compras registradas</small>
+                        </span>
+                        <span class="jc-folder-arrow" id="setaPastaCompras">›</span>
+                    </button>
+
+                    <div class="jc-folder-content" id="conteudoPastaCompras" hidden>
+                        <div class="jc-folder-content-head">
+                            <div>
+                                <h2>Histórico de compras</h2>
+                                <p>Consulte os valores que foram investidos em cada compra.</p>
+                            </div>
+                            <button type="button" class="jc-folder-close" id="fecharPastaCompras">Fechar</button>
+                        </div>
+                        <div class="jc-folder-body">
+
+
+                    <div class="table-responsive">
+
+                        <table class="data-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Data
+                                    </th>
+
+                                    <th>
+                                        Produto
+                                    </th>
+
+                                    <th>
+                                        Qtd.
+                                    </th>
+
+                                    <th>
+                                        Recebido
+                                    </th>
+
+                                    <th>
+                                        Situação
+                                    </th>
+
+                                    <th>
+                                        Compra
+                                    </th>
+
+                                    <th>
+                                        Venda
+                                    </th>
+
+                                    <th>
+                                        Total
+                                    </th>
+
+                                    <th>
+                                        Pagamento
+                                    </th>
+
+                                    <th>
+                                        Margem
+                                    </th>
+
+                                    <th>
+                                        Ações
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="listaCompras">
+
+                                <tr>
+
+                                    <td
+                                        colspan="11"
+                                        class="empty-table"
+                                    >
+                                        Nenhuma compra registrada.
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                        </div>
+                    </div>
+
+                </section>
+
+            </section>
+
+            <!-- =================================================
+                 MODAL EDITAR COMPRA
+                 ================================================= -->
+
+                <div
+                    class="modal-overlay"
+                    id="modalEditarCompra"
+                    hidden
+                >
+                    <div class="modal">
+
+                        <div class="modal-header">
+                            <div>
+                                <h2>Editar compra</h2>
+                                <p>Corrija a quantidade recebida, valores ou informações da compra.</p>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="modal-close"
+                                id="fecharModalEditarCompra"
+                                aria-label="Fechar"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <form id="formEditarCompra">
+                            <input type="hidden" id="editarCompraId">
+
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label>Produto</label>
+                                    <input type="text" id="editarCompraProduto" class="form-control" readonly>
+                                </div>
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="editarCompraQuantidade">Quantidade recebida *</label>
+                                        <input type="number" id="editarCompraQuantidade" class="form-control" min="1" step="1" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editarCompraCusto">Valor de compra por unidade *</label>
+                                        <input type="number" id="editarCompraCusto" class="form-control" min="0" step="0.01" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editarCompraVenda">Valor de venda por unidade *</label>
+                                        <input type="number" id="editarCompraVenda" class="form-control" min="0" step="0.01" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editarCompraPagamento">Forma de pagamento *</label>
+                                        <select id="editarCompraPagamento" class="form-control" required>
+                                            <option value="">Selecione</option>
+                                            <option value="dinheiro">Dinheiro</option>
+                                            <option value="pix">Pix</option>
+                                            <option value="cartao">Cartão</option>
+                                            <option value="prazo">Prazo</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group" id="editarCampoParcelasCompra" hidden>
+                                        <label for="editarCompraParcelas">Parcelas</label>
+                                        <select id="editarCompraParcelas" class="form-control">
+                                            <option value="1">1x</option><option value="2">2x</option><option value="3">3x</option><option value="4">4x</option><option value="5">5x</option><option value="6">6x</option><option value="7">7x</option><option value="8">8x</option><option value="9">9x</option><option value="10">10x</option><option value="11">11x</option><option value="12">12x</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group" id="editarCampoPrimeiraParcelaCompra" hidden>
+                                        <label for="editarCompraPrimeiraParcela">Data da 1ª parcela</label>
+                                        <input type="date" id="editarCompraPrimeiraParcela" class="form-control">
+                                    </div>
+
+                                    <div class="form-group" id="editarCampoVencimentoCompra" hidden>
+                                        <label for="editarCompraVencimento">Vencimento</label>
+                                        <input type="date" id="editarCompraVencimento" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editarCompraData">Data da compra *</label>
+                                        <input type="date" id="editarCompraData" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editarCompraPrevisaoEntrega">Previsão de entrega</label>
+                                        <input type="date" id="editarCompraPrevisaoEntrega" class="form-control">
+                                    </div>
+
+                                    <div class="form-group form-group-full">
+                                        <label for="editarCompraObservacoes">Observações</label>
+                                        <textarea id="editarCompraObservacoes" class="form-control" rows="3" placeholder="Observações da compra"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="editar-compra-resumo">
+                                    <span>Total da compra</span>
+                                    <strong id="editarCompraTotal">R$ 0,00</strong>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="secondary-button" id="cancelarEdicaoCompra">Cancelar</button>
+                                <button type="submit" class="primary-button">Salvar alterações</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            <!-- =================================================
+                 MODAL RECEBIMENTO DE COMPRA
+                 ================================================= -->
+
+                <div
+                    class="modal-overlay"
+                    id="modalReceberCompra"
+                    hidden
+                >
+                    <div class="modal">
+
+                        <div class="modal-header">
+                            <div>
+                                <h2>Confirmar recebimento</h2>
+                                <p>Confirme quantas unidades realmente chegaram. Somente a quantidade recebida será lançada no estoque.</p>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="modal-close"
+                                id="fecharModalReceberCompra"
+                                aria-label="Fechar"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <form id="formReceberCompra">
+                            <input type="hidden" id="receberCompraId">
+
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label>Produto</label>
+                                    <input type="text" id="receberCompraProduto" class="form-control" readonly>
+                                </div>
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Quantidade comprada</label>
+                                        <input type="text" id="receberCompraQuantidadeTotal" class="form-control" readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Já recebida</label>
+                                        <input type="text" id="receberCompraQuantidadeRecebida" class="form-control" readonly>
+                                    </div>
+
+                                    <div class="form-group form-group-full">
+                                        <label for="receberCompraQuantidade">Quantidade que chegou agora *</label>
+                                        <input type="number" id="receberCompraQuantidade" class="form-control" min="1" step="1" required>
+                                        <small style="display:block;margin-top:7px;color:#667085;">A quantidade restante será atualizada automaticamente.</small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="secondary-button" id="cancelarRecebimentoCompra">Cancelar</button>
+                                <button type="submit" class="primary-button">Confirmar entrada no estoque</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            <!-- =================================================
+                 CLIENTES
+                 ================================================= -->
+
+     <!-- =================================================
+     CLIENTES
+     ================================================= -->
+
+<section
+    class="page"
+    id="page-clientes"
+    data-page-content="clientes"
+    hidden
+>
+
+    <div class="page-heading">
+
+        <div>
+
+            <span class="eyebrow">
+                Cadastro
+            </span>
+
+            <h1>
+                Clientes
+            </h1>
+
+            <p>
+                Cadastre e gerencie os clientes da J.C Imports.
+            </p>
+
+        </div>
+
+        <div>
+
+            <button
+                type="button"
+                class="btn-primary"
+                id="novoCliente"
+            >
+                + Novo cliente
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESUMO -->
+
+    <div class="dashboard-cards">
+
+        <article class="dashboard-card">
+
+            <div class="dashboard-card-icon">
+                👥
+            </div>
+
+            <div>
+
+                <span>
+                    Clientes cadastrados
+                </span>
+
+                <strong id="clientesTotal">
+                    0
+                </strong>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- PASTA DE CLIENTES -->
+
+    <section class="jc-folder" id="pastaClientes">
+
+        <button
+            type="button"
+            class="jc-folder-toggle"
+            id="abrirPastaClientes"
+            aria-expanded="false"
+        >
+            <span class="jc-folder-icon">📁</span>
+            <span class="jc-folder-info">
+                <strong>Clientes cadastrados</strong>
+                <small><b id="clientesTotalPasta">0</b> clientes cadastrados</small>
+            </span>
+            <span class="jc-folder-arrow" id="setaPastaClientes">›</span>
+        </button>
+
+        <div class="jc-folder-content" id="conteudoPastaClientes" hidden>
+            <div class="jc-folder-content-head">
+                <div>
+                    <h2>Clientes cadastrados</h2>
+                    <p>Consulte, edite ou exclua clientes.</p>
+                </div>
+                <button type="button" class="jc-folder-close" id="fecharPastaClientes">Fechar</button>
+            </div>
+            <div class="jc-folder-body">
+
+
+        <!-- PESQUISA -->
+
+        <div class="produtos-pesquisa">
+
+            <input
+                type="search"
+                id="pesquisaClientes"
+                placeholder="Pesquisar cliente..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- TABELA -->
+
+        <div class="table-responsive">
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Nome
+                        </th>
+
+                        <th>
+                            Telefone
+                        </th>
+
+                        <th>
+                            E-mail
+                        </th>
+
+                        <th>
+                            CPF
+                        </th>
+
+                        <th>
+                            Cidade
+                        </th>
+
+                        <th>
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="listaClientes">
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="sem-registros"
+                        >
+                            Nenhum cliente cadastrado.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+<!-- =================================================
+     MODAL CLIENTE
+     ================================================= -->
+
+<div
+    class="modal"
+    id="modalCliente"
+    hidden
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="eyebrow">
+                    Cadastro
+                </span>
+
+                <h2 id="tituloModalCliente">
+                    Novo cliente
+                </h2>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="fecharModalCliente"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="formCliente">
+
+            <input
+                type="hidden"
+                id="clienteId"
+            >
+
+
+            <div class="form-grid">
+
+
+                <!-- NOME -->
+
+                <div class="form-group">
+
+                    <label for="clienteNome">
+                        Nome *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clienteNome"
+                        placeholder="Nome completo"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TELEFONE -->
+
+                <div class="form-group">
+
+                    <label for="clienteTelefone">
+                        Telefone / WhatsApp
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="clienteTelefone"
+                        placeholder="(00) 00000-0000"
+                    >
+
+                </div>
+
+
+                <!-- E-MAIL -->
+
+                <div class="form-group">
+
+                    <label for="clienteEmail">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="clienteEmail"
+                        placeholder="cliente@email.com"
+                    >
+
+                </div>
+
+
+                <!-- CPF -->
+
+                <div class="form-group">
+
+                    <label for="clienteCpf">
+                        CPF
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clienteCpf"
+                        placeholder="000.000.000-00"
+                    >
+
+                </div>
+
+
+                <!-- ENDEREÇO -->
+
+                <div class="form-group">
+
+                    <label for="clienteEndereco">
+                        Endereço
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clienteEndereco"
+                        placeholder="Rua / Avenida"
+                    >
+
+                </div>
+
+
+                <!-- NÚMERO -->
+
+                <div class="form-group">
+
+                    <label for="clienteNumero">
+                        Número
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clienteNumero"
+                        placeholder="Número"
+                    >
+
+                </div>
+
+
+                <!-- BAIRRO -->
+
+                <div class="form-group">
+
+                    <label for="clienteBairro">
+                        Bairro
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clienteBairro"
+                        placeholder="Bairro"
+                    >
+
+                </div>
+
+
+                <!-- CIDADE -->
+
+                <div class="form-group">
+
+                    <label for="clienteCidade">
+                        Cidade
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clienteCidade"
+                        placeholder="Cidade"
+                    >
+
+                </div>
+
+
+                <!-- OBSERVAÇÕES -->
+
+                <div
+                    class="form-group form-group-full"
+                >
+
+                    <label for="clienteObservacoes">
+                        Observações
+                    </label>
+
+                    <textarea
+                        id="clienteObservacoes"
+                        rows="3"
+                        placeholder="Informações adicionais..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- AÇÕES -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    id="cancelarCliente"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    Salvar cliente
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</section>
+
+
+            <!-- =================================================
+                 DESPESAS
+                 ================================================= -->
+
+            <section
+                class="page"
+                id="page-despesas"
+                data-page-content="despesas"
+                hidden
+            >
+
+                <div class="page-heading">
+                    <div>
+                        <span class="eyebrow">Financeiro</span>
+                        <h1>Despesas</h1>
+                        <p>Registre e acompanhe as despesas operacionais da J.C Imports.</p>
+                    </div>
+                </div>
+
+                <div id="despesasContent"></div>
+
+            </section>
+
+
+            <!-- =================================================
+                 RELATÓRIOS
+                 ================================================= -->
+
+            <section
+                class="page"
+                id="page-relatorios"
+                data-page-content="relatorios"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            Análises
+                        </span>
+
+                        <h1>
+                            Relatórios
+                        </h1>
+
+                        <p>
+                            Consulte os resultados da empresa.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="relatoriosContent"></div>
+
+            </section>
+
+
+
+           <!-- =================================================
+     BACKUP
+     ================================================= -->
+
+<section
+    class="page"
+    id="page-backup"
+    data-page-content="backup"
+    hidden
+>
+
+    <div class="page-heading">
+
+        <div>
+
+            <span class="eyebrow">
+                Segurança
+            </span>
+
+            <h1>
+                Backup
+            </h1>
+
+            <p>
+                Proteja e restaure os dados do sistema.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="backupContent"
+        style="
+            display:block!important;
+            visibility:visible!important;
+            opacity:1!important;
+        "
+    >
+
+        <div class="jc-backup-card">
+
+            <div class="jc-backup-head">
+
+                <div>
+
+                    <h2>
+                        🛡️ Segurança dos dados
+                    </h2>
+
+                    <p>
+                        Faça uma cópia dos dados do J.C Imports
+                        ou restaure um backup salvo anteriormente.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="jc-backup-actions">
+
+                <button
+                    type="button"
+                    id="jcBackupExport"
+                >
+                    ⬇️ Fazer backup
+                </button>
+
+                <button
+                    type="button"
+                    id="jcBackupImport"
+                    class="secondary"
+                >
+                    ⬆️ Restaurar backup
+                </button>
+
+                <input
+                    type="file"
+                    id="inputBackup"
+                    accept=".json,application/json"
+                    style="display:none;"
+                >
+
+            </div>
+
+
+            <div class="jc-backup-info">
+
+                Recomendação: mantenha os arquivos de backup
+                em um local seguro.
+
+            </div>
+
+            <div class="jc-backup-reset">
+                <button
+                    type="button"
+                    id="jcBackupReset"
+                    title="Apagar os dados locais do sistema"
+                >
+                    Resetar dados
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+            <!-- =================================================
+                 CONFIGURAÇÕES
+                 ================================================= -->
+
+            <section
+                class="page"
+                id="page-configuracoes"
+                data-page-content="configuracoes"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            Sistema
+                        </span>
+
+                        <h1>
+                            Configurações
+                        </h1>
+
+                        <p>
+                            Configure os dados do J.C Imports.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="configuracoesContent"></div>
+
+                    <div id="nuvemContent" style="display:block!important;visibility:visible!important;opacity:1!important;">
+    <div class="jc-cloud-card" id="jcCloudFallbackCard">
+        <div class="jc-cloud-head">
+            <div><h3>☁️ Sincronização entre dispositivos</h3><p>Use a mesma conta no computador e no celular para acessar os mesmos dados.</p></div>
+            <span id="jcCloudStatus" class="jc-cloud-status">Não conectado</span>
+        </div>
+        <div class="jc-cloud-grid">
+            <label>URL do Supabase<input id="jcCloudUrl" type="url" value="https://rxztexpthdytfixgpkmk.supabase.co"></label>
+            <label>Chave pública<input id="jcCloudKey" type="password" value="sb_publishable_xPO2QJWmLnT7ExE1D3lEnw_Xk7_l_Gq" autocomplete="off"></label>
+            <label>E-mail da conta<input id="jcCloudEmail" type="email" placeholder="cliente@email.com" autocomplete="username"></label>
+            <label>Senha<input id="jcCloudPass" type="password" placeholder="••••••••" autocomplete="current-password"></label>
+        </div>
+        <div class="jc-cloud-actions">
+            <button type="button" id="jcCloudSave">💾 Salvar conexão</button>
+            <button type="button" id="jcCloudCreate">👤 Criar conta</button>
+            <button type="button" id="jcCloudLogin">🔐 Entrar</button>
+            <button type="button" id="jcCloudSync">🔄 Sincronizar agora</button>
+            <button type="button" id="jcCloudDownload">☁️ Baixar da nuvem</button>
+            <button type="button" id="jcCloudLogout" class="secondary">Sair</button>
+        </div>
+        <div id="jcCloudInfo" class="jc-cloud-info">Pronto para conectar.</div>
+    </div>
+
+    <div class="jc-install-card" id="jcInstallCard" hidden>
+        <div class="jc-install-copy">
+            <strong>📱 Instalar J.C Imports no celular</strong>
+            <span>Use o sistema como um aplicativo, com acesso rápido pela tela inicial.</span>
+        </div>
+        <button type="button" id="jcInstallButton">Instalar aplicativo</button>
+    </div>
+</div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FUNDO DO MENU NO CELULAR
+         ===================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        hidden
+    ></div>
+
+
+
+    <!-- =====================================================
+         NOTIFICAÇÕES
+         ===================================================== -->
+
+    <div
+        class="toast-container"
+        id="toastContainer"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script src="JS/storage.js?v=3.3.0"></script>
+<script src="JS/nuvem.js?v=3.3.1"></script>
+
+<script src="JS/produtos.js"></script>
+
+<script src="JS/compras.js?v=3.1.0"></script>
+
+<script src="JS/clientes.js"></script>
+
+<script src="JS/vendas.js?v=2.3.1"></script>
+
+
+<script src="JS/backup.js"></script>
+
+<script src="JS/recibo.js?v=2.4.0"></script>
+
+<script src="JS/receber.js?v=3.4.0"></script>
+<script src="JS/relatorios.js?v=1.1.0"></script>
+<script src="JS/despesas.js?v=1.0.0"></script>
+
+<script src="JS/app.js?v=3.3.2"></script>
+
+<script>
+/* =========================================================
+   PASTAS DE CLIENTES E COMPRAS
+   ========================================================= */
+(function () {
+    function configurarPasta(botaoId, conteudoId, fecharId, setaId) {
+        const botao = document.getElementById(botaoId);
+        const conteudo = document.getElementById(conteudoId);
+        const fechar = document.getElementById(fecharId);
+        const seta = document.getElementById(setaId);
+        if (!botao || !conteudo) return;
+        const abrir = function () {
+            conteudo.hidden = false;
+            botao.setAttribute('aria-expanded', 'true');
+            if (seta) seta.classList.add('aberta');
+        };
+        const fecharPasta = function () {
+            conteudo.hidden = true;
+            botao.setAttribute('aria-expanded', 'false');
+            if (seta) seta.classList.remove('aberta');
+        };
+        botao.addEventListener('click', abrir);
+        if (fechar) fechar.addEventListener('click', fecharPasta);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        configurarPasta('abrirPastaClientes','conteudoPastaClientes','fecharPastaClientes','setaPastaClientes');
+        configurarPasta('abrirPastaCompras','conteudoPastaCompras','fecharPastaCompras','setaPastaCompras');
+    });
+})();
+
+/* =========================================================
+   PASTA DE PRODUTOS
+
+   ========================================================= */
+
+function abrirProdutosCadastrados() {
+
+    const conteudo =
+        document.getElementById(
+            "conteudoPastaProdutos"
+        );
+
+    const seta =
+        document.getElementById(
+            "setaPastaProdutos"
+        );
+
+
+    if (!conteudo) {
+        return;
+    }
+
+
+    conteudo.style.display = "block";
+
+
+    if (seta) {
+
+        seta.style.transform =
+            "rotate(90deg)";
+
+    }
+
+}
+
+
+/* =========================================================
+   FECHAR PASTA
+   ========================================================= */
+
+function fecharProdutosCadastrados() {
+
+    const conteudo =
+        document.getElementById(
+            "conteudoPastaProdutos"
+        );
+
+    const seta =
+        document.getElementById(
+            "setaPastaProdutos"
+        );
+
+
+    if (!conteudo) {
+        return;
+    }
+
+
+    conteudo.style.display = "none";
+
+
+    if (seta) {
+
+        seta.style.transform =
+            "rotate(0deg)";
+
+    }
+
+}
+
+
+/* =========================================================
+   ATUALIZAR TOTAL DA PASTA
+   ========================================================= */
+
+function atualizarTotalPastaProdutos() {
+
+    const total =
+        document.getElementById(
+            "produtosTotal"
+        );
+
+    const totalPasta =
+        document.getElementById(
+            "produtosTotalPasta"
+        );
+
+
+    if (
+        total &&
+        totalPasta
+    ) {
+
+        totalPasta.textContent =
+            total.textContent.trim() || "0";
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        atualizarTotalPastaProdutos();
+
+    }
+);
+
+</script>
+
+<script>
+/* J.C IMPORTS — navegação independente da tela Configurações.
+   Mantém a tela acessível mesmo se algum módulo JS apresentar erro. */
+(function(){
+
+  function abrirConfiguracoes(){
+
+    var paginas = document.querySelectorAll('.page');
+
+    paginas.forEach(function(p){
+      p.classList.remove('active');
+      p.hidden = true;
+    });
+
+    var alvo = document.getElementById('page-configuracoes');
+
+    if(!alvo) return;
+
+    alvo.hidden = false;
+    alvo.removeAttribute('hidden');
+    alvo.classList.add('active');
+    alvo.style.display = 'block';
+
+    /* Atualiza o menu */
+    var itens = document.querySelectorAll('.nav-item');
+
+    itens.forEach(function(i){
+      i.classList.toggle(
+        'active',
+        i.getAttribute('data-page') === 'configuracoes'
+      );
+    });
+
+    /* Atualiza o título */
+    var title = document.getElementById('pageTitle');
+
+    if(title){
+      title.textContent = 'Configurações';
+    }
+
+    /* Painel de configurações */
+    var host = document.getElementById('nuvemContent');
+
+    if(host){
+
+      /*
+       * Mantemos o painel fora de containers que possam
+       * limitar sua visualização.
+       */
+      if(host.parentElement !== document.body){
+        document.body.appendChild(host);
+      }
+
+      /*
+       * CELULAR / TABLET
+       * Mantém o comportamento que já estava funcionando.
+       */
+      if(window.innerWidth <= 1100){
+
+        host.style.cssText =
+          'display:block!important;' +
+          'visibility:visible!important;' +
+          'opacity:1!important;' +
+          'position:fixed!important;' +
+          'left:0!important;' +
+          'right:0!important;' +
+          'top:64px!important;' +
+          'bottom:0!important;' +
+          'width:auto!important;' +
+          'z-index:1!important;' +
+          'overflow:auto!important;' +
+          'background:#f7f9fc!important;' +
+          'padding:16px!important;' +
+          'box-sizing:border-box!important;';
+
+      } else {
+
+        /*
+         * COMPUTADOR
+         *
+         * A área principal começa depois do menu lateral.
+         * O painel fica centralizado nessa área.
+         */
+        host.style.cssText =
+          'display:block!important;' +
+          'visibility:visible!important;' +
+          'opacity:1!important;' +
+          'position:fixed!important;' +
+          'left:max(250px,calc((100vw + 250px - 1100px)/2))!important;' +
+          'right:auto!important;' +
+          'top:225px!important;' +
+          'bottom:24px!important;' +
+          'width:min(1100px,calc(100vw - 298px))!important;' +
+          'z-index:99999!important;' +
+          'overflow:auto!important;' +
+          'background:#f7f9fc!important;' +
+          'padding:24px!important;' +
+          'box-sizing:border-box!important;';
+      }
+
+      host.removeAttribute('hidden');
+    }
+
+    /* Renderiza o módulo da nuvem */
+    if(
+      window.JCCloud &&
+      typeof window.JCCloud.render === 'function'
+    ){
+      try{
+        window.JCCloud.render();
+      }catch(e){
+        console.error(e);
+      }
+    }
+
+    window.scrollTo(0,0);
+  }
+
+  window.__JC_OPEN_CONFIG = abrirConfiguracoes;
+
+})();
+</script>
+
+<script>
+/* J.C IMPORTS — navegação independente da tela Backup.
+   Segue o mesmo padrão usado na correção de Configurações. */
+(function(){
+  function abrirBackup(){
+    var paginas=document.querySelectorAll('.page');
+    paginas.forEach(function(p){p.classList.remove('active');p.hidden=true;});
+    var alvo=document.getElementById('page-backup');
+    if(!alvo) return;
+    alvo.hidden=false;
+    alvo.removeAttribute('hidden');
+    alvo.classList.add('active');
+    alvo.style.display='block';
+
+    var itens=document.querySelectorAll('.nav-item');
+    itens.forEach(function(i){i.classList.toggle('active',i.getAttribute('data-page')==='backup');});
+
+    var title=document.getElementById('pageTitle');
+    if(title) title.textContent='Backup';
+
+    var host=document.getElementById('backupContent');
+    if(host){
+      if(host.parentElement !== document.body){
+        document.body.appendChild(host);
+      }
+      if (window.innerWidth <= 1100) {
+        host.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;position:fixed!important;left:0!important;right:0!important;top:64px!important;bottom:0!important;width:auto!important;z-index:1!important;overflow:auto!important;background:#f7f9fc!important;padding:16px!important;box-sizing:border-box!important;';
+      } else {
+        host.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;position:fixed!important;left:300px!important;right:24px!important;top:225px!important;bottom:24px!important;z-index:99999!important;overflow:auto!important;background:#f7f9fc!important;padding:24px!important;box-sizing:border-box!important;';
+      }
+      host.removeAttribute('hidden');
+    }
+
+    var exportar=document.getElementById('jcBackupExport');
+    if(exportar && exportar.dataset.jcBound!=='1'){
+      exportar.dataset.jcBound='1';
+      exportar.addEventListener('click',function(){
+        if(typeof window.fazerBackup==='function') window.fazerBackup();
+        else alert('A função de backup ainda não foi carregada. Recarregue a página e tente novamente.');
+      });
+    }
+
+    var importar=document.getElementById('jcBackupImport');
+    var input=document.getElementById('inputBackup');
+    if(importar && importar.dataset.jcBound!=='1' && input){
+      importar.dataset.jcBound='1';
+      importar.addEventListener('click',function(){
+        if(typeof window.selecionarBackup==='function') window.selecionarBackup();
+        else input.click();
+      });
+    }
+
+    if(input && input.dataset.jcBound!=='1'){
+      input.dataset.jcBound='1';
+      input.addEventListener('change',function(event){
+        if(typeof window.restaurarBackup==='function') window.restaurarBackup(event);
+      });
+    }
+
+    var resetar=document.getElementById('jcBackupReset');
+    if(resetar && resetar.dataset.jcBound!=='1'){
+      resetar.dataset.jcBound='1';
+      resetar.addEventListener('click',function(){
+        if(typeof window.resetarSistema==='function') window.resetarSistema();
+      });
+    }
+    window.scrollTo(0,0);
+  }
+  function fecharBackup(){
+    var host=document.getElementById('backupContent');
+    var alvo=document.getElementById('page-backup');
+    if(host){
+      host.style.cssText='';
+      host.removeAttribute('hidden');
+      if(alvo && host.parentElement !== alvo){
+        alvo.appendChild(host);
+      }
+    }
+  }
+
+  document.addEventListener('click',function(event){
+    var item=event.target.closest ? event.target.closest('.nav-item') : null;
+    if(item && item.getAttribute('data-page') !== 'backup'){
+      fecharBackup();
+    }
+  },true);
+
+  window.__JC_CLOSE_BACKUP=fecharBackup;
+  window.__JC_OPEN_BACKUP=abrirBackup;
+})();
+</script>
+
+
+<script>
+/* J.C IMPORTS — PWA / instalação no celular / modo offline */
+(function(){
+  'use strict';
+  var deferredPrompt = null;
+  var installCard = document.getElementById('jcInstallCard');
+  var installButton = document.getElementById('jcInstallButton');
+
+  function isStandalone(){
+    return window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+
+  function showInstall(){
+    if(installCard && !isStandalone()) installCard.hidden = false;
+  }
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstall();
+  });
+
+  if(installButton){
+    installButton.addEventListener('click', async function(){
+      if(deferredPrompt){
+        deferredPrompt.prompt();
+        try{ await deferredPrompt.userChoice; }catch(_){}
+        deferredPrompt = null;
+        if(installCard) installCard.hidden = true;
+        return;
+      }
+      if(isStandalone()){
+        if(window.JCApp && typeof window.JCApp.toast === 'function') window.JCApp.toast('O J.C Imports já está instalado neste aparelho.');
+        return;
+      }
+      alert('No Android/Chrome, use o botão de instalação exibido pelo navegador. No iPhone, toque em Compartilhar e depois em “Adicionar à Tela de Início”.');
+    });
+  }
+
+  window.addEventListener('appinstalled', function(){
+    deferredPrompt = null;
+    if(installCard) installCard.hidden = true;
+  });
+
+  if('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(function(err){
+        console.warn('J.C Imports: service worker não registrado.', err);
+      });
+    });
+  }
+})();
+</script>
+
+<script>
+/* J.C IMPORTS — encerramento do splash de abertura */
+(function(){
+  var splash=document.getElementById('jcSplash');
+  if(!splash) return;
+
+  var inicio=Date.now();
+  var minimo=1550;
+  var encerrado=false;
+
+  function fecharSplash(){
+    if(encerrado) return;
+    encerrado=true;
+    var restante=Math.max(0,minimo-(Date.now()-inicio));
+    setTimeout(function(){
+      splash.classList.add('is-hidden');
+      setTimeout(function(){
+        if(splash && splash.parentNode) splash.parentNode.removeChild(splash);
+      },600);
+    },restante);
+  }
+
+  if(document.readyState==='complete') fecharSplash();
+  else window.addEventListener('load',fecharSplash,{once:true});
+
+  /* Segurança: mesmo se algum recurso externo demorar, o sistema abre. */
+  setTimeout(fecharSplash,3200);
+})();
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+{
+  "name": "J.C Imports",
+  "short_name": "J.C Imports",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f9ff",
+  "theme_color": "#1557a6",
+  "icons": [
+    {
+      "src": "images/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "./",
+  "scope": "./",
+  "orientation": "any",
+  "description": "Sistema de controle interno J.C Imports",
+  "shortcuts": [
+    {
+      "name": "Nova venda",
+      "short_name": "Vender",
+      "url": "./index.html#vendas",
+      "icons": [
+        {
+          "src": "images/icon.png",
+          "sizes": "1024x1024",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Produtos",
+      "short_name": "Produtos",
+      "url": "./index.html#produtos",
+      "icons": [
+        {
+          "src": "images/icon.png",
+          "sizes": "1024x1024",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
