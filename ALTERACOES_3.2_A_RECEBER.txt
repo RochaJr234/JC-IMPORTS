@@ -8,3 +8,9 @@ J.C IMPORTS 3.2 — NOVA INTERFACE A RECEBER
 - Interface responsiva para celular e computador.
 - Lógica de contas, recebimentos, financeiro e Supabase preservada.
 - Esta versão foi criada a partir da cópia da J.C Imports 3.1 FINAL COMPLETO.
+
+
+VERSAO 3.2.2 - PADRAO VISUAL JC IMPORTS
+- A tela A Receber usa somente azul, azul-escuro, branco e cinza.
+- Removida a cor dourada remanescente do modal de quitacao total.
+- Atualizado cache-busting do CSS, JS e Service Worker para evitar exibicao da versao antiga.

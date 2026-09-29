@@ -5443,7 +5443,7 @@ button {
 .receber-venda-card{background:#fff;border:1px solid #e8e8e8;border-radius:17px;overflow:hidden;box-shadow:0 4px 15px rgba(15,23,42,.04)}
 .receber-venda-cabecalho{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 20px;border-bottom:1px solid #f0f0f0}
 .receber-cliente-bloco{display:flex;align-items:center;gap:12px;min-width:220px}
-.receber-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#f3d77e,#1557a6);color:#fff;font-weight:900;flex:0 0 42px}
+.receber-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#2f80ed,#1557a6);color:#fff;font-weight:900;flex:0 0 42px}
 .receber-cliente-bloco strong{display:block;color:#1f2937;font-size:15px}
 .receber-cliente-bloco span{display:block;color:#8a9099;font-size:12px;margin-top:3px}
 .receber-venda-metricas{display:flex;align-items:center;gap:28px}
@@ -5461,10 +5461,10 @@ button {
 .receber-parcela-valor strong{display:block;font-size:13px;color:#252a31}
 .receber-parcela-valor span{display:block;font-size:10px;color:#8b919a;margin-top:3px}
 .receber-parcela-row .receber-status{justify-self:start}
-.btn-receber-mini{width:100%;min-height:36px;border-radius:9px!important;background:linear-gradient(135deg,#e4bd55,#1557a6)!important;color:#fff!important;border:0!important;font-weight:800!important}
+.btn-receber-mini{width:100%;min-height:36px;border-radius:9px!important;background:linear-gradient(135deg,#2f80ed,#1557a6)!important;color:#fff!important;border:0!important;font-weight:800!important}
 .receber-pago-mini{font-size:12px;color:#15803d;font-weight:750}
 .receber-venda-acoes{display:flex;justify-content:flex-end;gap:9px;padding:14px 20px;background:#fff;border-top:1px solid #f0f0f0}
-.receber-venda-acoes .btn-quitar-total{min-height:38px;border-radius:9px!important;background:linear-gradient(135deg,#dcb24d,#0f4b91)!important;border:0!important}
+.receber-venda-acoes .btn-quitar-total{min-height:38px;border-radius:9px!important;background:linear-gradient(135deg,#1557a6,#0b356b)!important;border:0!important}
 .btn-ver-detalhes{min-height:38px;padding:0 13px;border-radius:9px;border:1px solid #d9dce1;background:#fff;color:#4b5563;font-size:12px;font-weight:750;cursor:pointer}
 .btn-ver-detalhes:hover{border-color:#8eb5e5;color:#1557a6;background:#f4f8ff}
 .receber-vazio-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:48px 20px;text-align:center;background:#fff;border:1px dashed #ddd;border-radius:15px;color:#6b7280}

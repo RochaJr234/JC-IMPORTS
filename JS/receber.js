@@ -1422,7 +1422,7 @@
                 </p>
                 <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:14px;margin:12px 0 16px">
                     <span style="display:block;color:#64748b;font-size:12px">Total restante</span>
-                    <strong style="display:block;color:#B8860B;font-size:25px;margin-top:3px">${moedaReceber(total)}</strong>
+                    <strong style="display:block;color:#1557a6;font-size:25px;margin-top:3px">${moedaReceber(total)}</strong>
                 </div>
                 <label style="display:block;font-size:13px;font-weight:700;color:#334155;margin-bottom:6px">Forma de pagamento</label>
                 <select id="formaQuitacaoTotalJC" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:15px;margin-bottom:18px">

@@ -1,11 +1,11 @@
-const CACHE_NAME = "jc-imports-3.1-mobile-1";
+const CACHE_NAME = "jc-imports-3.2.2-a-receber";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./css/style.css?v=2.3.0",
-  "./css/dashboard.css?v=2.3.0",
-  "./css/responsive.css?v=2.3.0",
+  "./css/style.css?v=3.2.2",
+  "./css/dashboard.css?v=3.2.2",
+  "./css/responsive.css?v=3.2.2",
   "./JS/app.js",
   "./JS/storage.js",
   "./JS/financeiro.js",
@@ -13,7 +13,7 @@ const APP_SHELL = [
   "./JS/produtos.js",
   "./JS/compras.js",
   "./JS/clientes.js",
-  "./JS/receber.js",
+  "./JS/receber.js?v=3.2.2",
   "./JS/despesas.js",
   "./JS/relatorios.js",
   "./JS/backup.js",
