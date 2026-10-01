@@ -1,4 +1,4 @@
-const CACHE_NAME = "jc-imports-3.4.0-pedidos-vendas-pessoais";
+const CACHE_NAME = "jc-imports-3.5.2-protecao-nuvem";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -19,7 +19,7 @@ const APP_SHELL = [
   "./JS/relatorios.js",
   "./JS/backup.js",
   "./JS/recibo.js",
-  "./JS/nuvem.js?v=3.4.0",
+  "./JS/nuvem.js?v=3.5.2",
   "./images/icon.png",
   "./images/logo-completa.png"
 ];

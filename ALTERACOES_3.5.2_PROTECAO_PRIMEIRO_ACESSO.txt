@@ -1,0 +1,12 @@
+J.C IMPORTS — VERSÃO 3.5.2
+
+Correção principal: proteção contra sobrescrever a nuvem com um computador/celular vazio antes do primeiro download.
+
+1. Mantida a URL Supabase já utilizada pelo projeto.
+2. Após login/reabertura, o sistema verifica primeiro se existem dados na nuvem.
+3. Se o aparelho local estiver vazio e a nuvem tiver dados, o sistema baixa os dados antes de iniciar o auto-sync.
+4. O upload automático fica bloqueado quando o aparelho local está vazio e a nuvem possui dados.
+5. Se a nuvem estiver vazia e o aparelho possuir dados, o sistema pode enviar os dados para criar a cópia.
+6. Se ambos tiverem dados, os horários de atualização são comparados antes do auto-sync.
+7. O auto-sync só é iniciado depois da reconciliação inicial.
+8. Nenhum dado é apagado propositalmente por esta correção.

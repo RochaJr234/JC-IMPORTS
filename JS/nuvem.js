@@ -9,6 +9,7 @@
 
     const CFG_KEY = "jc_imports_nuvem_config";
     const LOCAL_UPDATED_KEY = "jc_imports_nuvem_updated_at";
+    const FIRST_SYNC_KEY = "jc_imports_nuvem_primeiro_acesso_v2";
     const SUPABASE_CDN =
         "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
 
@@ -495,6 +496,106 @@
 
 
     /* =====================================================
+       PROTEÇÃO DO PRIMEIRO ACESSO
+       ===================================================== */
+
+    const DATA_ARRAY_KEYS = [
+        "produtos",
+        "clientes",
+        "vendas",
+        "financeiro",
+        "receber",
+        "compras",
+        "vendasPessoais",
+        "cartoesPessoais",
+        "pedidos"
+    ];
+
+    function contarDados(payload) {
+        const p = payload || {};
+        return DATA_ARRAY_KEYS.reduce(function (total, chave) {
+            return total + (Array.isArray(p[chave]) ? p[chave].length : 0);
+        }, 0);
+    }
+
+    function resumoDados(payload) {
+        const p = payload || {};
+        const r = {};
+        DATA_ARRAY_KEYS.forEach(function (chave) {
+            r[chave] = Array.isArray(p[chave]) ? p[chave].length : 0;
+        });
+        r.total = contarDados(p);
+        return r;
+    }
+
+    async function registroNuvemAtual() {
+        const s = await session();
+        if (!s || !s.user) throw new Error("Faça login para sincronizar.");
+        const { data, error } = await client
+            .from("jc_imports_nuvem")
+            .select("payload,updated_at")
+            .eq("user_id", s.user.id)
+            .maybeSingle();
+        if (error) throw error;
+        return data || null;
+    }
+
+    async function prepararPrimeiraSincronizacao() {
+        const s = await session();
+        if (!s || !s.user) return false;
+
+        const local = dadosLocais();
+        const localTotal = contarDados(local);
+        const remote = await registroNuvemAtual();
+
+        /* Não existe cópia na nuvem: este é o primeiro aparelho.
+           Só envia se houver dados locais. Nunca cria um registro vazio. */
+        if (!remote) {
+            if (localTotal > 0) {
+                await enviarNuvem(true);
+            }
+            localStorage.setItem(FIRST_SYNC_KEY, s.user.id);
+            return true;
+        }
+
+        const remoteTotal = contarDados(remote.payload || {});
+        const remoteTime = new Date(remote.updated_at || 0).getTime();
+        const localTime = new Date(localUpdatedAt()).getTime();
+
+        /* REGRA PRINCIPAL:
+           aparelho novo/vazio + nuvem com dados = BAIXAR.
+           Nunca permitir que o aparelho vazio sobrescreva a nuvem. */
+        if (remoteTotal > 0 && localTotal === 0) {
+            info("Dados encontrados na nuvem. Baixando antes de iniciar a sincronização...", false);
+            const ok = await baixarNuvem(false, true);
+            if (ok) localStorage.setItem(FIRST_SYNC_KEY, s.user.id);
+            return ok;
+        }
+
+        /* Nuvem vazia + aparelho com dados = enviar para criar a cópia. */
+        if (remoteTotal === 0 && localTotal > 0) {
+            await enviarNuvem(true);
+            localStorage.setItem(FIRST_SYNC_KEY, s.user.id);
+            return true;
+        }
+
+        /* Ambos possuem dados. A versão mais nova prevalece, mas somente
+           depois de os dois lados terem sido comparados. */
+        if (remoteTime > localTime) {
+            const ok = await baixarNuvem(false, true);
+            if (ok) localStorage.setItem(FIRST_SYNC_KEY, s.user.id);
+            return ok;
+        }
+
+        if (localTime > remoteTime) {
+            await enviarNuvem(true);
+        }
+
+        localStorage.setItem(FIRST_SYNC_KEY, s.user.id);
+        return true;
+    }
+
+    /* =====================================================
        ENVIAR PARA A NUVEM
        ===================================================== */
 
@@ -523,6 +624,19 @@
             const payload =
                 dadosLocais();
 
+            /* Nunca sobrescrever uma nuvem com dados locais vazios.
+               Isso protege o cadastro quando um computador novo é aberto
+               antes do primeiro download. */
+            const localTotal = contarDados(payload);
+            const existente = await registroNuvemAtual();
+            const remoteTotal = existente ? contarDados(existente.payload || {}) : 0;
+            if (existente && remoteTotal > 0 && localTotal === 0) {
+                console.warn("[Nuvem] Upload bloqueado: aparelho local vazio e nuvem possui dados.");
+                if (!silencioso) {
+                    await baixarNuvem(false, true);
+                }
+                return false;
+            }
 
             const updatedAt =
                 localUpdatedAt();
@@ -1424,13 +1538,12 @@
 
 
                         info(
-                            "Login realizado com sucesso.",
+                            "Login realizado. Verificando os dados da nuvem antes de sincronizar...",
                             false
                         );
 
-
-                        iniciarAutoSync();
-
+                        const inicial = await prepararPrimeiraSincronizacao();
+                        if (inicial) iniciarAutoSync();
 
                         await updateStatus();
 
@@ -1883,7 +1996,10 @@
 
             if (s) {
 
-                iniciarAutoSync();
+                /* Ao reabrir um aparelho, reconciliamos primeiro.
+                   O auto-sync só começa depois dessa proteção. */
+                const inicial = await prepararPrimeiraSincronizacao();
+                if (inicial) iniciarAutoSync();
 
                 await updateStatus();
 
