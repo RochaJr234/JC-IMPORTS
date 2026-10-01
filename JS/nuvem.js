@@ -341,7 +341,29 @@
         }
 
 
-        return JCStorage.obterTodosDados();
+        const dados = JCStorage.obterTodosDados();
+
+        /*
+           Além do objeto estruturado do sistema, guardamos uma cópia
+           das chaves jc_imports_* do localStorage. Isso evita que um
+           módulo criado posteriormente (por exemplo Despesas) fique
+           fora da nuvem por não estar listado no storage.js.
+           Credenciais/configuração da nuvem nunca entram no payload.
+        */
+        const localStorageData = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (!key || !key.startsWith("jc_imports_")) continue;
+            if (key === CFG_KEY || key === LOCAL_UPDATED_KEY) continue;
+            try {
+                localStorageData[key] = JSON.parse(localStorage.getItem(key));
+            } catch (_) {
+                localStorageData[key] = localStorage.getItem(key);
+            }
+        }
+
+        dados.__localStorage = localStorageData;
+        return dados;
 
     }
 
@@ -697,9 +719,21 @@
             window.__jcCloudRestoring = true;
             let result;
             try {
-                result = JCStorage.restaurarTodosDados(
-                    data.payload || {}
-                );
+                const payload = data.payload || {};
+
+                /* Restaura também as chaves jc_imports_* que pertencem aos
+                   módulos, sem tocar nas credenciais da nuvem. */
+                if (payload.__localStorage && typeof payload.__localStorage === "object") {
+                    Object.entries(payload.__localStorage).forEach(([key, value]) => {
+                        if (!key.startsWith("jc_imports_")) return;
+                        if (key === CFG_KEY || key === LOCAL_UPDATED_KEY) return;
+                        try {
+                            localStorage.setItem(key, JSON.stringify(value));
+                        } catch (_) {}
+                    });
+                }
+
+                result = JCStorage.restaurarTodosDados(payload);
             } finally {
                 window.__jcCloudRestoring = false;
             }

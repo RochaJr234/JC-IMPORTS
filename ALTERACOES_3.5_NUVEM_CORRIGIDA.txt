@@ -1,0 +1,10 @@
+J.C IMPORTS — VERSÃO 3.5
+
+CORREÇÃO DA SINCRONIZAÇÃO COMPLETA
+
+- A nuvem agora guarda, além do backup estruturado, todas as chaves jc_imports_* usadas pelos módulos.
+- Isso inclui módulos que usam localStorage próprio, como Despesas e futuras extensões.
+- As credenciais/configuração da nuvem e o marcador de data local nunca são enviados.
+- Ao usar Baixar da nuvem, as chaves dos módulos são restauradas antes da atualização da interface.
+- Mantido o funcionamento de Clientes, Produtos, Vendas, Compras, Financeiro, A Receber, Despesas, Vendas Pessoais, Cartões Pessoais e Pedidos.
+- Não alterar a URL do Supabase que já funcionava na versão anterior.
