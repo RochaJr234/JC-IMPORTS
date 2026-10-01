@@ -29,7 +29,13 @@
 
         configuracoes: "jc_imports_configuracoes",
 
-        compras: "jc_imports_compras"
+        compras: "jc_imports_compras",
+
+        vendasPessoais: "jc_imports_vendas_pessoais",
+
+        cartoesPessoais: "jc_imports_cartoes_pessoais",
+
+        pedidos: "jc_imports_pedidos"
 
     };
 
@@ -118,13 +124,15 @@
             );
 
             try {
-                localStorage.setItem(
-                    "jc_imports_nuvem_updated_at",
-                    agora()
-                );
-                window.dispatchEvent(
-                    new CustomEvent("jcstoragechange", { detail: { chave } })
-                );
+                if (!window.__jcCloudRestoring) {
+                    localStorage.setItem(
+                        "jc_imports_nuvem_updated_at",
+                        agora()
+                    );
+                    window.dispatchEvent(
+                        new CustomEvent("jcstoragechange", { detail: { chave } })
+                    );
+                }
             } catch (_) {}
 
             return true;
@@ -340,6 +348,20 @@
                 []
             );
 
+        }
+
+
+        /* Vendas Pessoais */
+        if (localStorage.getItem(STORAGE_KEYS.vendasPessoais) === null) {
+            salvar(STORAGE_KEYS.vendasPessoais, []);
+        }
+
+        /* Cartões Pessoais */
+        if (localStorage.getItem(STORAGE_KEYS.cartoesPessoais) === null) {
+            salvar(STORAGE_KEYS.cartoesPessoais, []);
+        }
+        if (localStorage.getItem(STORAGE_KEYS.pedidos) === null) {
+            salvar(STORAGE_KEYS.pedidos, []);
         }
 
     }
@@ -1167,6 +1189,15 @@
             compras:
                 obterCompras(),
 
+            vendasPessoais:
+                obterVendasPessoais(),
+
+            cartoesPessoais:
+                obterCartoesPessoais(),
+
+            pedidos:
+                obterPedidos(),
+
             configuracoes:
                 obterConfiguracoes(),
 
@@ -1297,6 +1328,31 @@
 
 
             if (
+                Array.isArray(
+                    dados.vendasPessoais
+                )
+            ) {
+                salvar(STORAGE_KEYS.vendasPessoais, dados.vendasPessoais);
+            }
+
+            if (
+                Array.isArray(
+                    dados.cartoesPessoais
+                )
+            ) {
+                salvar(STORAGE_KEYS.cartoesPessoais, dados.cartoesPessoais);
+            }
+
+            if (
+                Array.isArray(
+                    dados.pedidos
+                )
+            ) {
+                salvar(STORAGE_KEYS.pedidos, dados.pedidos);
+            }
+
+
+            if (
                 dados.configuracoes &&
                 typeof dados.configuracoes
                 === "object"
@@ -1343,6 +1399,89 @@
 
 
     /* =====================================================
+       VENDAS PESSOAIS
+       ===================================================== */
+
+    function obterVendasPessoais() {
+        const dados = ler(STORAGE_KEYS.vendasPessoais, []);
+        return Array.isArray(dados) ? dados : [];
+    }
+
+    function salvarVendasPessoais(vendas) {
+        return salvar(STORAGE_KEYS.vendasPessoais, Array.isArray(vendas) ? vendas : []);
+    }
+
+    function adicionarVendaPessoal(venda) {
+        const lista = obterVendasPessoais();
+        const novo = { ...venda, id: venda.id || gerarId("VP"), pagamentos: Array.isArray(venda.pagamentos) ? venda.pagamentos : [], periodosJuros: Array.isArray(venda.periodosJuros) ? venda.periodosJuros : [], criadoEm: venda.criadoEm || agora(), atualizadoEm: agora() };
+        lista.push(novo);
+        salvarVendasPessoais(lista);
+        return novo;
+    }
+
+    function atualizarVendaPessoal(venda) {
+        const lista = obterVendasPessoais();
+        const i = lista.findIndex(x => x && x.id === venda.id);
+        if (i < 0) return false;
+        lista[i] = { ...lista[i], ...venda, atualizadoEm: agora() };
+        return salvarVendasPessoais(lista);
+    }
+
+    function excluirVendaPessoal(id) {
+        return salvarVendasPessoais(obterVendasPessoais().filter(x => x && x.id !== id));
+    }
+
+    function limparVendasPessoais() { return salvarVendasPessoais([]); }
+
+    /* =====================================================
+       CARTÕES PESSOAIS
+       ===================================================== */
+
+    function obterCartoesPessoais() {
+        const dados = ler(STORAGE_KEYS.cartoesPessoais, []);
+        return Array.isArray(dados) ? dados : [];
+    }
+
+    function salvarCartoesPessoais(cartoes) {
+        return salvar(STORAGE_KEYS.cartoesPessoais, Array.isArray(cartoes) ? cartoes : []);
+    }
+
+    function adicionarCartaoPessoal(cartao) {
+        const lista = obterCartoesPessoais();
+        const novo = { ...cartao, id: cartao.id || gerarId("CARD"), criadoEm: cartao.criadoEm || agora(), atualizadoEm: agora() };
+        lista.push(novo);
+        salvarCartoesPessoais(lista);
+        return novo;
+    }
+
+    function atualizarCartaoPessoal(cartao) {
+        const lista = obterCartoesPessoais();
+        const i = lista.findIndex(x => x && x.id === cartao.id);
+        if (i < 0) return false;
+        lista[i] = { ...lista[i], ...cartao, atualizadoEm: agora() };
+        return salvarCartoesPessoais(lista);
+    }
+
+    function excluirCartaoPessoal(id) {
+        return salvarCartoesPessoais(obterCartoesPessoais().filter(x => x && x.id !== id));
+    }
+
+    function limparCartoesPessoais() { return salvarCartoesPessoais([]); }
+
+    /* =====================================================
+       PEDIDOS
+       ===================================================== */
+
+    function obterPedidos() {
+        const dados = ler(STORAGE_KEYS.pedidos, []);
+        return Array.isArray(dados) ? dados : [];
+    }
+
+    function salvarPedidos(pedidos) {
+        return salvar(STORAGE_KEYS.pedidos, Array.isArray(pedidos) ? pedidos : []);
+    }
+
+    /* =====================================================
        EXPOSIÇÃO GLOBAL
        ===================================================== */
 
@@ -1385,6 +1524,23 @@
         obterCompras,
         salvarCompras,
         adicionarCompra,
+
+        obterVendasPessoais,
+        salvarVendasPessoais,
+        adicionarVendaPessoal,
+        atualizarVendaPessoal,
+        excluirVendaPessoal,
+        limparVendasPessoais,
+
+        obterCartoesPessoais,
+        salvarCartoesPessoais,
+        adicionarCartaoPessoal,
+        atualizarCartaoPessoal,
+        excluirCartaoPessoal,
+        limparCartoesPessoais,
+
+        obterPedidos,
+        salvarPedidos,
 
         obterContasReceber,
 

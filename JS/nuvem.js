@@ -584,7 +584,8 @@
        ===================================================== */
 
     async function baixarNuvem(
-        silencioso
+        silencioso,
+        forcar
     ) {
 
         try {
@@ -661,7 +662,8 @@
 
             if (
                 localTime > remoteTime &&
-                !silencioso
+                !silencioso &&
+                !forcar
             ) {
 
                 const ok =
@@ -692,10 +694,15 @@
             }
 
 
-            const result =
-                JCStorage.restaurarTodosDados(
+            window.__jcCloudRestoring = true;
+            let result;
+            try {
+                result = JCStorage.restaurarTodosDados(
                     data.payload || {}
                 );
+            } finally {
+                window.__jcCloudRestoring = false;
+            }
 
 
             if (
@@ -1539,7 +1546,8 @@
 
 
                         await baixarNuvem(
-                            false
+                            false,
+                            true
                         );
 
 

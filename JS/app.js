@@ -59,6 +59,8 @@
 
         vendas: "Vendas",
 
+        pedidos: "Pedidos",
+
         produtos: "Produtos",
 
         compras: "Compras",
@@ -68,6 +70,8 @@
         financeiro: "Financeiro",
 
         receber: "A receber",
+
+        "vendas-pessoais": "Vendas Pessoais",
 
         despesas: "Despesas",
 
@@ -298,6 +302,15 @@
         }
 
         if (
+            pagina === "pedidos" &&
+            window.JCPedidos &&
+            typeof window.JCPedidos.render === "function"
+        ) {
+            window.JCPedidos.render();
+        }
+
+
+        if (
             pagina === "produtos" &&
             window.JCProdutos &&
             typeof window.JCProdutos.atualizarTela === "function"
@@ -335,6 +348,18 @@
 
             window.JCDespesas.atualizarInterface();
 
+        }
+
+
+        /* =====================================================
+           VENDAS PESSOAIS
+           ===================================================== */
+        if (
+            pagina === "vendas-pessoais" &&
+            window.JCVendasPessoais &&
+            typeof window.JCVendasPessoais.render === "function"
+        ) {
+            window.JCVendasPessoais.render();
         }
 
 

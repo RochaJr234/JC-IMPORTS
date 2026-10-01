@@ -67,6 +67,11 @@
 }
 </style>
 
+<style id="jc-vendas-pessoais-style">
+.vp-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 4px}.vp-secondary,.vp-tools button{min-height:43px;padding:0 17px;border:1px solid #d7e0ea;border-radius:9px;background:#f7f9fc;color:#18334f;font-weight:700;cursor:pointer}.vp-resumo{margin-top:4px}.vp-folder{margin-top:16px}.vp-list{padding:14px}.vp-item{border:1px solid #e3e9f0;border-radius:14px;padding:15px;margin-bottom:10px;background:#fff}.vp-item-main{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.vp-item-main strong{display:block;color:#17212b;font-size:15px}.vp-item-main small{display:block;margin-top:4px;color:#6b7785;font-size:12px}.vp-status{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:11px;font-weight:800;text-transform:uppercase}.vp-status.aberto{background:#fff4df;color:#a15c00}.vp-status.quitado{background:#eaf8ef;color:#177245}.vp-item-grid,.vp-grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.vp-item-grid>div,.vp-grid3>div{padding:10px;border-radius:10px;background:#f7f9fc}.vp-item-grid span,.vp-grid3 span{display:block;color:#738092;font-size:11px}.vp-item-grid b,.vp-grid3 b{display:block;margin-top:4px;color:#1557a6;font-size:14px}.vp-item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.vp-item-actions button{min-height:36px;padding:0 12px;border:1px solid #d6dfe8;border-radius:8px;background:#fff;color:#245070;font-weight:700;cursor:pointer}.vp-item-actions button.danger,.vp-tools button.danger{color:#b42318;background:#fff7f6;border-color:#f1cccc}.vp-card-value{margin-top:14px;font-size:25px;font-weight:850;color:#1557a6}.vp-empty{padding:28px;text-align:center;color:#738092;background:#fafcff;border-radius:10px}.vp-tools{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:16px;padding:18px 20px;border:1px solid #e1e8f0;border-radius:16px;background:#fff;box-shadow:0 4px 18px rgba(15,35,55,.05)}.vp-tools strong{color:#17212b}.vp-tools p{margin:5px 0 0;color:#6b7785;font-size:12px;line-height:1.5}.vp-tools-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.vp-modal-overlay{position:fixed;inset:0;z-index:7000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(7,27,49,.55);backdrop-filter:blur(3px)}.vp-modal{width:min(680px,100%);max-height:calc(100vh - 36px);overflow:auto;background:#fff;border-radius:16px;box-shadow:0 25px 80px rgba(0,0,0,.28)}.vp-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid #e7edf3}.vp-modal-head span{font-size:11px;color:#1557a6;font-weight:800;text-transform:uppercase}.vp-modal-head h2{margin:3px 0 0;font-size:20px;color:#17212b}.vp-modal-head>button{width:36px;height:36px;border:0;border-radius:9px;background:#f2f5f8;color:#52606d;font-size:25px;cursor:pointer}.vp-modal-body{padding:20px}.vp-form label{display:block;margin-bottom:14px;color:#334155;font-size:13px;font-weight:700}.vp-form input,.vp-form select,.vp-form textarea{display:block;width:100%;box-sizing:border-box;margin-top:7px;padding:12px;border:1px solid #d2dbe5;border-radius:9px;background:#fff;color:#17212b;font:inherit}.vp-form textarea{resize:vertical}.vp-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.vp-calc{display:grid;grid-template-columns:1fr auto;gap:7px 15px;margin:5px 0 16px;padding:13px;border-radius:11px;background:#edf5ff}.vp-calc span{color:#5d6b79;font-size:12px}.vp-calc b{color:#1557a6}.vp-modal-actions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:16px}.vp-detail-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.vp-detail-top strong{display:block;font-size:18px}.vp-detail-top small{display:block;color:#6b7785;margin-top:4px}.vp-detail-note{margin:15px 0;padding:13px;border-radius:10px;background:#f5f8fc;color:#5d6b79;font-size:12px;line-height:1.5}.vp-detail-note p{margin:5px 0 0}.vp-detail h3{margin:18px 0 8px;font-size:15px}.vp-payments>div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #edf1f5;color:#627081;font-size:12px}.vp-payments b{color:#1557a6}
+@media(max-width:700px){.vp-actions{flex-direction:column}.vp-actions button{width:100%}.vp-item-grid,.vp-grid3,.vp-grid2{grid-template-columns:1fr}.vp-tools{flex-direction:column;align-items:stretch}.vp-tools-actions{justify-content:stretch;flex-direction:column}.vp-tools-actions button{width:100%}.vp-modal-overlay{padding:8px;align-items:flex-start}.vp-modal{max-height:calc(100vh - 16px);border-radius:14px}.vp-modal-body{padding:15px}.vp-modal-actions{flex-direction:column}.vp-modal-actions button{width:100%}}
+</style>
+
 <style id="jc-splash-style">
 /* =========================================================
    SPLASH DE ABERTURA — CÍRCULO COM LOGO
@@ -288,6 +293,15 @@
 
             </button>
 
+            <button
+                type="button"
+                class="nav-item"
+                data-page="pedidos"
+            >
+                <span class="nav-icon">📝</span>
+                <span>Pedidos</span>
+            </button>
+
 
             <button
                 type="button"
@@ -338,6 +352,17 @@
                 </span>
 
             </button>
+
+            <button
+                type="button"
+                class="nav-item"
+                data-page="vendas-pessoais"
+            >
+                <span class="nav-icon">💰</span>
+                <span>Vendas Pessoais</span>
+            </button>
+
+
 
 
 
@@ -750,6 +775,48 @@
                 <div id="vendasContent"></div>
 
             </section>
+
+            <!-- =================================================
+                 PEDIDOS
+                 ================================================= -->
+            <section
+                class="page"
+                id="page-pedidos"
+                data-page-content="pedidos"
+                hidden
+            >
+                <div class="page-heading">
+                    <div>
+                        <span class="eyebrow">Comercial</span>
+                        <h1>Pedidos</h1>
+                        <p>Crie e acompanhe pedidos sem baixar o estoque. O estoque só é alterado quando a venda for registrada.</p>
+                    </div>
+                </div>
+                <div id="pedidosContent"></div>
+            </section>
+
+
+            <!-- =================================================
+                 VENDAS PESSOAIS
+                 ================================================= -->
+            <section
+                class="page"
+                id="page-vendas-pessoais"
+                data-page-content="vendas-pessoais"
+                hidden
+            >
+                <div class="page-heading">
+                    <div>
+                        <span class="eyebrow">Controle pessoal</span>
+                        <h1>Vendas Pessoais</h1>
+                        <p>Controle créditos pessoais e faturas de cartões sem misturar com a empresa.</p>
+                    </div>
+                </div>
+                <div id="vendasPessoaisContent"></div>
+            </section>
+
+
+
 
 <!-- =================================================
      A RECEBER
@@ -2860,14 +2927,16 @@
      JAVASCRIPT
      ========================================================= -->
 
-<script src="JS/storage.js?v=3.3.0"></script>
-<script src="JS/nuvem.js?v=3.3.1"></script>
+<script src="JS/storage.js?v=3.4.0"></script>
+<script src="JS/nuvem.js?v=3.4.0"></script>
 
 <script src="JS/produtos.js"></script>
 
 <script src="JS/compras.js?v=3.1.0"></script>
 
 <script src="JS/clientes.js"></script>
+<script src="JS/pedidos.js?v=1.0.0"></script>
+<script src="JS/vendas-pessoais.js?v=1.0.2"></script>
 
 <script src="JS/vendas.js?v=2.3.1"></script>
 
@@ -2880,7 +2949,7 @@
 <script src="JS/relatorios.js?v=1.1.0"></script>
 <script src="JS/despesas.js?v=1.0.0"></script>
 
-<script src="JS/app.js?v=3.3.2"></script>
+<script src="JS/app.js?v=3.4.0"></script>
 
 <script>
 /* =========================================================

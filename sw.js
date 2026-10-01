@@ -1,4 +1,4 @@
-const CACHE_NAME = "jc-imports-3.2.2-a-receber";
+const CACHE_NAME = "jc-imports-3.4.0-pedidos-vendas-pessoais";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -6,19 +6,20 @@ const APP_SHELL = [
   "./css/style.css?v=3.2.2",
   "./css/dashboard.css?v=3.2.2",
   "./css/responsive.css?v=3.2.2",
-  "./JS/app.js",
+  "./JS/app.js?v=3.4.0",
   "./JS/storage.js",
   "./JS/financeiro.js",
   "./JS/vendas.js",
   "./JS/produtos.js",
   "./JS/compras.js",
   "./JS/clientes.js",
+  "./JS/vendas-pessoais.js?v=1.0.2",
   "./JS/receber.js?v=3.2.2",
   "./JS/despesas.js",
   "./JS/relatorios.js",
   "./JS/backup.js",
   "./JS/recibo.js",
-  "./JS/nuvem.js",
+  "./JS/nuvem.js?v=3.4.0",
   "./images/icon.png",
   "./images/logo-completa.png"
 ];

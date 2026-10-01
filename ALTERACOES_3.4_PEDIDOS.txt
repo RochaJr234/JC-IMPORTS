@@ -1,0 +1,3 @@
+J.C Imports 3.4
+
+Novo módulo Pedidos: cliente, produtos, quantidade, preço, status, entrega, observações, edição, exclusão, visualização e impressão. Pedido não baixa estoque nem lança financeiro. Pedidos entram no backup geral e no payload da nuvem. O botão Baixar da nuvem força a restauração do payload remoto; durante a restauração os eventos locais são suspensos para evitar sobrescrita automática. Vendas Pessoais permanece isolado.

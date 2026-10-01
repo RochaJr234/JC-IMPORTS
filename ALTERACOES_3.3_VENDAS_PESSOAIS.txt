@@ -1,0 +1,19 @@
+J.C IMPORTS — ALTERAÇÕES 3.3
+
+1. Corrigida a URL padrão do Supabase para o projeto correto.
+2. Cache do PWA atualizado para forçar a versão nova dos arquivos.
+3. Criado o módulo Vendas Pessoais, separado das vendas comerciais.
+4. O módulo usa os clientes já cadastrados no cadastro geral.
+5. Créditos ficam em uma pasta recolhida para não poluir a tela.
+6. Crédito: valor principal, juros por período, data, vencimento e observações.
+7. Pagamentos: somente juros, principal ou juros + principal.
+8. O pagamento somente dos juros não reduz o principal.
+9. Pode ser criado um novo período de juros quando o principal continuar aberto.
+10. Cada crédito pode ser aberto, editado e excluído; excluir não apaga o cliente geral.
+11. Cartões: somente nome, valor total da fatura, data e status pago/em aberto.
+12. Cartões também ficam em pasta própria.
+13. Backup exclusivo de Vendas Pessoais (créditos, pagamentos e faturas).
+14. Restauração exclusiva desse backup.
+15. Opção Zerar Vendas Pessoais: apaga apenas créditos, pagamentos e faturas; clientes gerais continuam cadastrados.
+16. Os dados de Vendas Pessoais também fazem parte do payload da sincronização da conta Supabase, sem criar nova tabela.
+17. O restante do sistema comercial foi mantido separado.
