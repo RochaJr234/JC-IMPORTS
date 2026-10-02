@@ -1,4 +1,4 @@
-const CACHE_NAME = "jc-imports-3.5.2-protecao-nuvem";
+const CACHE_NAME = "jc-imports-3.5.3-categorias-valores";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -19,7 +19,7 @@ const APP_SHELL = [
   "./JS/relatorios.js",
   "./JS/backup.js",
   "./JS/recibo.js",
-  "./JS/nuvem.js?v=3.5.2",
+  "./JS/nuvem.js?v=3.5.3",
   "./images/icon.png",
   "./images/logo-completa.png"
 ];

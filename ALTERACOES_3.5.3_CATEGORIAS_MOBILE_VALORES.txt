@@ -1,0 +1,26 @@
+J.C IMPORTS — VERSÃO 3.5.3
+
+1. PEDIDOS
+- Layout responsivo para celular.
+- Tabela vira cards no mobile.
+- Formulário de itens adaptado para telas pequenas.
+
+2. CATEGORIAS DE COMPRAS
+- O produto já possui categoria no cadastro.
+- A compra passa a guardar a categoria do produto.
+- Histórico de compras ganhou pastas virtuais por categoria.
+- Ex.: JBL, TV, Celular etc.
+- Compras antigas sem categoria são classificadas pelo cadastro atual do produto.
+
+3. VALORES
+- Parser de valores de compra aceita 1234,56 e 1.234,56.
+- Mantido o custo médio ponderado do estoque quando o mesmo produto é comprado por valores diferentes.
+- Totais de compra continuam baseados em quantidade × custo unitário.
+
+4. SINCRONIZAÇÃO
+- Mantida a proteção do primeiro acesso da versão 3.5.2.
+- Não foi alterada a URL do Supabase.
+
+5. ARREDONDAMENTO
+- Totais de compras e pedidos são arredondados em centavos antes de serem salvos.
+- Evita diferenças causadas por ponto flutuante em operações como 3 × 19,99.

@@ -46,6 +46,12 @@
     };
 
 
+    function arredondarCentavos(valor) {
+        const n = Number(valor);
+        return Number.isFinite(n) ? Math.round((n + Number.EPSILON) * 100) / 100 : 0;
+    }
+
+
     function moeda(valor) {
 
         const numero =
@@ -64,15 +70,26 @@
 
     function numero(valor) {
 
-        const n =
-            Number(
-                String(valor ?? "")
-                    .replace(",", ".")
-            );
+        if (typeof valor === "number") {
+            return Number.isFinite(valor) ? valor : 0;
+        }
 
-        return Number.isFinite(n)
-            ? n
-            : 0;
+        let texto = String(valor ?? "")
+            .trim()
+            .replace(/\s/g, "");
+
+        if (!texto) return 0;
+
+        // Aceita 1234,56 e também 1.234,56 sem alterar números
+        // que já chegam no formato decimal do navegador.
+        if (texto.includes(",") && texto.includes(".")) {
+            texto = texto.replace(/\./g, "").replace(",", ".");
+        } else if (texto.includes(",")) {
+            texto = texto.replace(",", ".");
+        }
+
+        const n = Number(texto);
+        return Number.isFinite(n) ? n : 0;
 
     }
 
@@ -547,9 +564,9 @@
         }
         if (pagamento === "prazo" && !dataValidaISOCompra(vencimento)) { alert("Informe a data de vencimento da compra a prazo."); return; }
 
-        const valorTotal = quantidade * custo;
-        const lucroUnitario = venda - custo;
-        const margemPercentual = venda > 0 ? (lucroUnitario / venda) * 100 : 0;
+        const valorTotal = arredondarCentavos(quantidade * custo);
+        const lucroUnitario = arredondarCentavos(venda - custo);
+        const margemPercentual = venda > 0 ? arredondarCentavos((lucroUnitario / venda) * 100) : 0;
         const recebidaAgora = situacao === "recebida";
         let entrada = null;
 
@@ -577,6 +594,7 @@
             produtoId: produto.id,
             produtoCodigo: produto.codigo || "",
             produtoNome: produto.nome || "",
+            categoria: produto.categoria || "Sem categoria",
             quantidade: quantidade,
             quantidadeRecebida: recebidaAgora ? quantidade : 0,
             situacao: recebidaAgora ? "recebida" : "transito",
@@ -652,6 +670,36 @@
         if (elementoValorTransito) elementoValorTransito.textContent = moeda(valorEmTransito);
     }
 
+    let categoriaComprasSelecionada = "__TODAS__";
+
+    function categoriaDaCompra(compra) {
+        if (compra && compra.categoria) return String(compra.categoria).trim() || "Sem categoria";
+        const produto = JCProdutos.buscarPorId(compra?.produtoId);
+        return String(produto?.categoria || "Sem categoria").trim() || "Sem categoria";
+    }
+
+    function renderizarPastasCompras(compras) {
+        const host = document.getElementById("comprasPastasCategorias");
+        if (!host) return;
+        const mapa = {};
+        compras.forEach(c => {
+            const cat = categoriaDaCompra(c);
+            mapa[cat] = (mapa[cat] || 0) + 1;
+        });
+        const cats = Object.keys(mapa).sort((a,b)=>a.localeCompare(b,"pt-BR"));
+        const botoes = [
+            `<button type="button" class="compra-pasta ${categoriaComprasSelecionada === "__TODAS__" ? "ativo" : ""}" data-categoria-compra="__TODAS__">📁 Todas <span>${compras.length}</span></button>`,
+            ...cats.map(cat => `<button type="button" class="compra-pasta ${categoriaComprasSelecionada === cat ? "ativo" : ""}" data-categoria-compra="${escaparHTML(cat)}">📁 ${escaparHTML(cat)} <span>${mapa[cat]}</span></button>`)
+        ];
+        host.innerHTML = botoes.join("");
+        host.querySelectorAll("[data-categoria-compra]").forEach(btn => {
+            btn.onclick = () => {
+                categoriaComprasSelecionada = btn.dataset.categoriaCompra || "__TODAS__";
+                renderizarHistorico();
+            };
+        });
+    }
+
     function renderizarHistorico() {
 
         const tabela = document.getElementById("listaCompras");
@@ -661,20 +709,27 @@
             return new Date(b.data || 0) - new Date(a.data || 0);
         });
 
-        const pastaTotal = document.getElementById("comprasTotalPasta");
-        if (pastaTotal) pastaTotal.textContent = compras.length;
+        renderizarPastasCompras(compras);
 
-        if (compras.length === 0) {
-            tabela.innerHTML = `<tr><td colspan="11" class="empty-table">Nenhuma compra registrada.</td></tr>`;
+        const filtradas = categoriaComprasSelecionada === "__TODAS__"
+            ? compras
+            : compras.filter(c => categoriaDaCompra(c) === categoriaComprasSelecionada);
+
+        const pastaTotal = document.getElementById("comprasTotalPasta");
+        if (pastaTotal) pastaTotal.textContent = filtradas.length;
+
+        if (filtradas.length === 0) {
+            tabela.innerHTML = `<tr><td colspan="12" class="empty-table">Nenhuma compra encontrada nesta categoria.</td></tr>`;
             return;
         }
 
-        tabela.innerHTML = compras.map(function (compra) {
+        tabela.innerHTML = filtradas.map(function (compra) {
             const margem = numero(compra.margemPercentual);
             const total = Math.max(0, Number(compra.quantidade) || 0);
             const recebido = quantidadeRecebidaCompra(compra);
             const pendente = Math.max(0, total - recebido);
             const situacao = situacaoCompra(compra);
+            const categoria = categoriaDaCompra(compra);
             const acaoReceber = pendente > 0
                 ? `<button type="button" class="btn-receber-compra" data-id="${escaparHTML(compra.id)}" title="Registrar chegada da mercadoria">📥 Receber</button>`
                 : `<span style="font-size:12px;color:#18794e;font-weight:700;">✓ Entrada concluída</span>`;
@@ -683,6 +738,7 @@
                 <tr>
                     <td>${escaparHTML(formatarData(compra.data))}${compra.previsaoEntrega && pendente > 0 ? `<small class="historico-subinfo">Entrega: ${escaparHTML(formatarData(compra.previsaoEntrega))}</small>` : ""}</td>
                     <td><strong>${escaparHTML(compra.produtoNome)}</strong><small>${escaparHTML(compra.numero)}</small></td>
+                    <td><span class="compra-categoria-badge">${escaparHTML(categoria)}</span></td>
                     <td>${total}</td>
                     <td><strong>${recebido}</strong>${pendente > 0 ? `<small class="historico-subinfo">${pendente} pendente(s)</small>` : ""}</td>
                     <td>${obterEtiquetaSituacao(compra)}</td>
@@ -898,15 +954,15 @@
             recebidaEm: novaSituacao === "recebida" ? (antiga.recebidaEm || JCStorage.agora()) : null,
             custoUnitario: custo,
             precoVendaUnitario: venda,
-            totalCompra: quantidade * custo,
-            lucroUnitario: venda - custo,
-            margemPercentual: venda > 0 ? ((venda - custo) / venda) * 100 : 0,
+            totalCompra: arredondarCentavos(quantidade * custo),
+            lucroUnitario: arredondarCentavos(venda - custo),
+            margemPercentual: venda > 0 ? arredondarCentavos(((venda - custo) / venda) * 100) : 0,
             formaPagamento: pagamento,
             statusPagamento: pagamento === "prazo" ? "pendente" : "pago",
             parcelas: parcelas,
             primeiraParcela: primeiraParcela,
             vencimento: vencimento,
-            cronogramaParcelas: pagamento === "cartao" ? gerarParcelasCompra(quantidade * custo, parcelas, primeiraParcela) : [],
+            cronogramaParcelas: pagamento === "cartao" ? gerarParcelasCompra(arredondarCentavos(quantidade * custo), parcelas, primeiraParcela) : [],
             data: data,
             observacoes: observacoes,
             atualizadoEm: JCStorage.agora()
@@ -1052,6 +1108,7 @@
         const produtoAtualizado = produtos.find(function (item) { return item.id === produto.id; });
         if (produtoAtualizado) {
             produtoAtualizado.precoVenda = Number(compra.precoVendaUnitario) || 0;
+            compra.categoria = produtoAtualizado.categoria || compra.categoria || "Sem categoria";
             produtoAtualizado.atualizadoEm = JCStorage.agora();
             JCStorage.salvarProdutos(produtos);
         }
@@ -1068,6 +1125,22 @@
             : "Recebimento parcial registrado. A quantidade restante continua em trânsito.");
     }
 
+
+    function injetarEstilosCategoriasCompras() {
+        if (document.getElementById("compras-categorias-style")) return;
+        const s = document.createElement("style");
+        s.id = "compras-categorias-style";
+        s.textContent = `
+            .compras-pastas-categorias{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+            .compra-pasta{border:1px solid #d9e2ef;background:#fff;color:#24415f;border-radius:12px;padding:10px 13px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:7px;box-shadow:0 3px 10px rgba(20,50,90,.04)}
+            .compra-pasta span{font-size:11px;background:#eef3f8;border-radius:999px;padding:2px 7px}
+            .compra-pasta.ativo{background:#1761b5;color:#fff;border-color:#1761b5}
+            .compra-pasta.ativo span{background:rgba(255,255,255,.18);color:#fff}
+            .compra-categoria-badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#eef5ff;color:#1557a6;font-size:11px;font-weight:700;white-space:nowrap}
+            @media(max-width:700px){.compras-pastas-categorias{display:grid;grid-template-columns:1fr 1fr}.compra-pasta{justify-content:space-between}.compra-categoria-badge{white-space:normal}}
+        `;
+        document.head.appendChild(s);
+    }
 
     function atualizarTela() {
 
@@ -1267,6 +1340,8 @@
 
 
     function inicializar() {
+
+        injetarEstilosCategoriasCompras();
 
         const data =
             document.getElementById(
